@@ -1,3 +1,13 @@
+---
+stage: 02-content-planning
+kind: human-final
+status: draft
+source_workflow: /02-content-planning
+---
+
+> 👤 **本文件 = 人工修订定稿线（tutorial.final.md）**。正文初稿由自动产物 `tutorial.md` 原样拷入，**请在此文件上完成人工修订**（措辞/深度/取舍），改定后把上方 `status` 置为 `approved`。
+> 下游 04 脚本以本文件为「口播内容真相源」，并须逐条覆盖文末「必讲要点覆盖清单」。`tutorial.md` 保持为 AI 自动产物、不在其上人工定稿。
+
 # 代码即视频（Video-as-Code）：把一条视频做成可编译、可复用、可被 AI 接管的工程
 
 ## 【AI 视频自动化生产线】第 2 期：渲染引擎篇 · 企业级落地指南
@@ -241,3 +251,47 @@ npx remotion render src/index.ts <CompositionId> out/demo.mp4
 - **据实标注**：每条结论带证据状态与验收标准，未实测一律 `paper_spec`。
 
 下一期我们将攻克**「字幕与卡点」**：向 Whisper 接口获取毫秒级时间戳 JSON，自动驱动 `@CaptionOverlay` 与卡点动效组件。
+
+
+---
+
+## 必讲要点覆盖清单（Coverage Checklist）
+
+> 用途：本期口播（04 脚本）必须逐条讲到下列要点；每条标注其在 `README.md` 分镜中的对应段号。人工定稿时可增删/调整，但删除要点须确认确实不讲。04 自查时逐条勾选。
+
+### 一、范式与痛点 → README 第一、二段
+- [ ] 传统剪辑 = 轨道+绝对时间轴，对高频更新技术视频是低 ROI 体力活
+- [ ] Video-as-Code 三特性：可版本控制 / 可参数化批量复用 / AI 友好
+- [ ] 一句话本质：**帧即状态（Frame as State）**——画面是“代码/数据的函数”
+- [ ] “代码即视频 ≠ Remotion”：它是一类范式，至少 6 条技术路线
+
+### 二、判断层矩阵 → README 第三段
+- [ ] 判断层 = 边界与验收（适用/不适用/已知坑/验收标准），非中立百科
+- [ ] 6 方案矩阵：Remotion / Motion Canvas·Revideo / Manim / MoviePy / PixiJS·Cocos / FFmpeg
+- [ ] “怎么对号入座”：本项目主线 = Remotion(A轨) + MoviePy/FFmpeg(B轨)
+- [ ] 每方案的证据状态（verified / paper_spec）须念到
+
+### 三、选型理由 → README 第三段
+- [ ] 选型回到核心约束：固定模板 + 内容批量替换 + AI 端到端接管 + 跨期可维护
+- [ ] Remotion 胜出四理由：数据驱动模板(决定性)/AI友好/CLI原生/网页生态
+- [ ] `Remotion ✅ vs HyperFrames ❌` 对照（类型安全/维护/授权）
+- [ ] “要付的税”：需懂 React / BUSL 授权 / SSR 环境坑（非噱头卖点）
+
+### 四、流程即代码（Dogfooding）→ README 第四段
+- [ ] 三件套：角色=system_prompt / 工作流=user_prompt / frontmatter=状态机
+- [ ] 七阶段流水线（01→07）映射
+- [ ] `python-frontmatter` 最小编排器伪代码（如何端到端驱动）
+- [ ] A 轨可全自动、B 轨须真人录屏 → “挂起等待”机制
+- [ ] 本期可复现的提示词链（数据驱动 @ComparisonCard + MDC 守卫规则）
+
+### 五、核心实操与避坑 → README 第五段
+- [ ] 帧即状态最小组件：`interpolate(frame, ...)` 的 `FadeIn` 写法
+- [ ] 首选数据驱动现成组件：`@ComparisonCard` 传数据 ✅ vs 从零手写 ❌
+- [ ] SSR 守卫：顶层读 `window` ❌ vs `typeof window !== 'undefined'` 守卫 ✅
+- [ ] 用 `.cursor/rules/remotion-ssr.mdc` 把“税”一次性封死
+- [ ] 技术精度：Node 端打包/求值崩溃 ≠ 逐帧 SSR（决定往哪查 bug）
+- [ ] 渲染命令与 `<CompositionId>` 录制前对齐（paper_spec）
+
+### 结尾 CTA → README 第六段
+- [ ] 代码即视频 + 流程即代码 = 把内容生产做成工程流水线
+- [ ] 关注引导 + 下期预告（Whisper 毫秒级字幕/卡点）
