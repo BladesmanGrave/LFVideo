@@ -58,6 +58,8 @@ source_workflow: /02-content-planning
 | **PixiJS / Cocos2d-HTML5** | JS | Canvas 上下文逐帧绘制 | 游戏类复杂粒子动画 | 标准网页 UI、文本对齐 | 文本换行与 DOM 对齐计算复杂 |
 | **FFmpeg + 脚本** | Shell/任意 | filtergraph / 命令拼接 | 批量转码、轻量字幕烧录、合成兜底 | 复杂动效、交互式排版 | filtergraph 语法晦涩、调试困难 |
 
+> 各方案的证据状态（`verified`/`paper_spec`）与验收标准见同期 `README.md` 的校验 JSON，此处只保留给人做选择的维度。
+
 **怎么对号入座**：做"一期一个模板、字幕/代码卡片高复用"的硬核技术视频，看第 1 行（Remotion）；把录好的屏幕片段拼起来加 BGM 闪避，看第 4 行（MoviePy）；纯算法/数学缓动炫技，看第 2 行（Motion Canvas）。本项目主线落在 **Remotion（A 轨成片）+ MoviePy/FFmpeg（B 轨拼接闪避）** 的组合上。
 
 **对比结论**：以"前端栈复杂排版 + 类型安全跨期复用 + AI 友好"为筛选条件，**Remotion** 是当前最优解；Motion Canvas/Revideo 是最接近的备选（更偏时序动画），其余按场景兜底。选型理由展开见 §三。
