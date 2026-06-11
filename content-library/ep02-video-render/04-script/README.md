@@ -1,7 +1,7 @@
 ---
 stage: 04-script
 platform: bilibili
-status: draft
+status: approved
 source_workflow: /04-script-draft
 upstream_inputs:
   - 02-plan/README.md (status: approved)

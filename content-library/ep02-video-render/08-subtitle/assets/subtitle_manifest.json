@@ -1,0 +1,29 @@
+{
+  "whisper_model": "base",
+  "language": "zh",
+  "total_entries": 233,
+  "total_duration_seconds": 553.82,
+  "max_chars_per_line": 20,
+  "files": {
+    "srt": "ep02-video-render.srt",
+    "vtt": "ep02-video-render.vtt"
+  },
+  "entries_by_segment": {
+    "S1_intro": 10,
+    "S2a_paradigm": 23,
+    "S2b_frame_as_state": 4,
+    "S2c_six_routes": 21,
+    "S3a_judgment_matrix": 31,
+    "S3b_remotion_reasons": 18,
+    "S3c_comparison": 10,
+    "S3d_tradeoffs": 16,
+    "S4a_pipeline": 14,
+    "S4b_three_piece": 1,
+    "S4c_orchestrator": 11,
+    "S4d_ab_track": 17,
+    "S5a_data_driven": 14,
+    "S5b_ssr_guard": 17,
+    "S5c_ai_render": 18,
+    "S6_cta": 8
+  }
+}
