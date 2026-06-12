@@ -1,29 +1,50 @@
 """
-06-TTS 合成脚本：使用 Piper TTS (zh_CN-huayan-medium) 将 04 脚本口播文本合成为 WAV 音频。
-用法：python synthesize.py
-前置：pip install piper-tts (需 onnxruntime + espeak-ng bundled)
+06-TTS 合成脚本：将 04 脚本口播文本合成为 WAV 音频。
+
+支持引擎：
+  - cosyvoice3  （默认）调用远程 CosyVoice 3 FastAPI 服务
+  - piper       本地 Piper TTS（zh_CN-huayan-medium）
+
+用法：
+  # CosyVoice 3（需先在 GPU 机器上部署服务）
+  python synthesize.py --engine cosyvoice3 --cosyvoice-url http://YOUR_GPU_SERVER:9880
+
+  # Piper（本地，无需 GPU）
+  python synthesize.py --engine piper
+
+  # 也可通过环境变量配置
+  TTS_ENGINE=cosyvoice3 COSYVOICE_URL=http://YOUR_GPU_SERVER:9880 python synthesize.py
+
+前置：
+  - cosyvoice3: 远程机器部署 CosyVoice 3 FastAPI 服务（见 README.md）
+  - piper:      pip install piper-tts
 """
 
-import os
-import wave
+import argparse
 import json
+import os
 import time
 import urllib.request
+import wave
 from pathlib import Path
 
 # --- 配置 ---
 SCRIPT_DIR = Path(__file__).parent
 MODELS_DIR = SCRIPT_DIR / "models"
 MODELS_DIR.mkdir(exist_ok=True)
-MODEL_PATH = MODELS_DIR / "zh_CN-huayan-medium.onnx"
-MODEL_CONFIG_PATH = MODELS_DIR / "zh_CN-huayan-medium.onnx.json"
+PIPER_MODEL_PATH = MODELS_DIR / "zh_CN-huayan-medium.onnx"
+PIPER_MODEL_CONFIG_PATH = MODELS_DIR / "zh_CN-huayan-medium.onnx.json"
 ASSETS_DIR = SCRIPT_DIR / "assets"
 ASSETS_DIR.mkdir(exist_ok=True)
 
-# Hugging Face 下载地址
+# Piper 模型 Hugging Face 下载地址
 _HF_BASE = "https://huggingface.co/rhasspy/piper-voices/resolve/main/zh/zh_CN/huayan/medium"
-_MODEL_URL = f"{_HF_BASE}/zh_CN-huayan-medium.onnx"
-_CONFIG_URL = f"{_HF_BASE}/zh_CN-huayan-medium.onnx.json"
+_PIPER_MODEL_URL = f"{_HF_BASE}/zh_CN-huayan-medium.onnx"
+_PIPER_CONFIG_URL = f"{_HF_BASE}/zh_CN-huayan-medium.onnx.json"
+
+# CosyVoice 3 默认配置
+DEFAULT_COSYVOICE_URL = "http://127.0.0.1:9880"
+COSYVOICE_SAMPLE_RATE = 24000  # CosyVoice 3 输出采样率
 
 
 def ensure_model():
@@ -116,9 +137,10 @@ def ensure_model():
                 f"  或镜像: {url.replace('huggingface.co', 'hf-mirror.com')}\n"
                 f"  保存到: {path}"
             )
-
+            
+# ============================================================
 # 04 脚本口播文本（按段落 ID 对应）
-# 从 04-script/README.md 提取的完整 [口播] 内容
+# ============================================================
 NARRATION_SEGMENTS = {
     "S1_intro": (
         "用PR、AE一帧帧剪视频？停。你有没有想过，写代码就是在写视频？"
@@ -258,15 +280,127 @@ NARRATION_SEGMENTS = {
 }
 
 
-def synthesize_all():
-    """使用 Piper TTS 合成所有口播段落"""
-    ensure_model()
+# ============================================================
+# CosyVoice 3 引擎（远程 FastAPI 服务）
+# ============================================================
 
-    from piper import PiperVoice
+def _cosyvoice3_synthesize_segment(
+    text: str,
+    output_path: Path,
+    base_url: str,
+    mode: str = "sft",
+    spk_id: str = "中文女",
+    instruct_text: str = "",
+    prompt_wav_path: str = "",
+):
+    """调用远程 CosyVoice 3 FastAPI 服务合成单段音频，保存为 WAV。
 
-    print(f"Loading model: {MODEL_PATH}")
-    voice = PiperVoice.load(str(MODEL_PATH))
-    print(f"Model loaded. Sample rate: {voice.config.sample_rate} Hz")
+    支持三种模式：
+      - sft:        预训练音色（需 spk_id）
+      - zero_shot:  零样本克隆（需 prompt_wav_path + prompt_text）
+      - instruct2:  自然语言控制（需 instruct_text + prompt_wav_path）
+
+    CosyVoice 3 FastAPI 接口（官方 runtime/python/fastapi/server.py）：
+      POST /inference_sft          Form: tts_text, spk_id
+      POST /inference_zero_shot    Form: tts_text, prompt_text, prompt_wav (file)
+      POST /inference_instruct2    Form: tts_text, instruct_text, prompt_wav (file)
+
+    响应为 StreamingResponse，body 是 raw PCM int16 数据（24000 Hz mono）。
+    """
+    import urllib.parse
+    import urllib.error
+
+    url = f"{base_url.rstrip('/')}/inference_{mode}"
+
+    # 构建 multipart/form-data
+    boundary = "----CosyVoice3Boundary"
+    body_parts = []
+
+    def add_field(name: str, value: str):
+        body_parts.append(
+            f"--{boundary}\r\n"
+            f'Content-Disposition: form-data; name="{name}"\r\n\r\n'
+            f"{value}\r\n"
+        )
+
+    def add_file(name: str, filename: str, data: bytes, content_type: str = "audio/wav"):
+        body_parts.append(
+            f"--{boundary}\r\n"
+            f'Content-Disposition: form-data; name="{name}"; filename="{filename}"\r\n'
+            f"Content-Type: {content_type}\r\n\r\n"
+        )
+        body_parts.append(data)
+        body_parts.append(b"\r\n")
+
+    add_field("tts_text", text)
+
+    if mode == "sft":
+        add_field("spk_id", spk_id)
+    elif mode == "zero_shot":
+        add_field("prompt_text", instruct_text or "")
+        if prompt_wav_path and Path(prompt_wav_path).exists():
+            with open(prompt_wav_path, "rb") as f:
+                add_file("prompt_wav", Path(prompt_wav_path).name, f.read())
+    elif mode == "instruct2":
+        add_field("instruct_text", instruct_text)
+        if prompt_wav_path and Path(prompt_wav_path).exists():
+            with open(prompt_wav_path, "rb") as f:
+                add_file("prompt_wav", Path(prompt_wav_path).name, f.read())
+
+    body_parts.append(f"--{boundary}--\r\n")
+
+    # Encode body
+    body = b""
+    for part in body_parts:
+        if isinstance(part, str):
+            body += part.encode("utf-8")
+        else:
+            body += part
+
+    req = urllib.request.Request(
+        url,
+        data=body,
+        headers={
+            "Content-Type": f"multipart/form-data; boundary={boundary}",
+        },
+        method="POST",
+    )
+
+    try:
+        with urllib.request.urlopen(req, timeout=300) as resp:
+            pcm_data = resp.read()
+    except urllib.error.URLError as e:
+        raise ConnectionError(
+            f"无法连接 CosyVoice 3 服务: {url}\n"
+            f"错误: {e}\n"
+            f"请确认服务已启动并可访问。"
+        ) from e
+
+    # raw PCM int16 → WAV
+    with wave.open(str(output_path), "wb") as wf:
+        wf.setnchannels(1)
+        wf.setsampwidth(2)
+        wf.setframerate(COSYVOICE_SAMPLE_RATE)
+        wf.writeframes(pcm_data)
+
+
+def synthesize_cosyvoice3(args):
+    """使用远程 CosyVoice 3 服务合成所有口播段落。"""
+    base_url = args.cosyvoice_url
+    mode = args.cosyvoice_mode
+    spk_id = args.cosyvoice_spk
+    instruct_text = args.cosyvoice_instruct
+    prompt_wav = args.cosyvoice_prompt_wav
+
+    print(f"Engine: CosyVoice 3 (remote)")
+    print(f"Server: {base_url}")
+    print(f"Mode: {mode} | Speaker: {spk_id}")
+
+    # 健康检查
+    try:
+        urllib.request.urlopen(f"{base_url.rstrip('/')}/inference_sft", timeout=5)
+    except Exception:
+        pass  # GET 可能返回 405，但说明服务在线
 
     results = []
     total_duration = 0.0
@@ -278,16 +412,19 @@ def synthesize_all():
 
         start_time = time.time()
 
-        with wave.open(str(output_path), "wb") as wf:
-            wf.setnchannels(1)
-            wf.setsampwidth(2)  # 16-bit
-            wf.setframerate(voice.config.sample_rate)
-            voice.synthesize_wav(text, wf)
+        _cosyvoice3_synthesize_segment(
+            text=text,
+            output_path=output_path,
+            base_url=base_url,
+            mode=mode,
+            spk_id=spk_id,
+            instruct_text=instruct_text,
+            prompt_wav_path=prompt_wav,
+        )
 
         elapsed = time.time() - start_time
         file_size = output_path.stat().st_size
 
-        # Calculate duration from WAV
         with wave.open(str(output_path), "rb") as wf:
             frames = wf.getnframes()
             rate = wf.getframerate()
@@ -304,11 +441,96 @@ def synthesize_all():
         })
         print(f"  Duration: {duration:.2f}s | Size: {file_size} bytes | Synth time: {elapsed:.2f}s")
 
-    # Write manifest
+    _write_manifest("cosyvoice3", f"Fun-CosyVoice3-0.5B ({mode})",
+                     COSYVOICE_SAMPLE_RATE, total_duration, results)
+
+
+# ============================================================
+# Piper 引擎（本地）
+# ============================================================
+
+def _ensure_piper_model():
+    """检查 Piper 模型文件是否存在，缺失则自动从 Hugging Face 下载。"""
+    for path, url, label in [
+        (PIPER_MODEL_PATH, _PIPER_MODEL_URL, "模型 (.onnx)"),
+        (PIPER_MODEL_CONFIG_PATH, _PIPER_CONFIG_URL, "配置 (.onnx.json)"),
+    ]:
+        if path.exists():
+            continue
+        print(f"[下载] {label} 不存在，正在从 Hugging Face 下载...")
+        print(f"  URL: {url}")
+        print(f"  目标: {path}")
+        try:
+            urllib.request.urlretrieve(url, str(path))
+            size_mb = path.stat().st_size / (1024 * 1024)
+            print(f"  完成 ({size_mb:.1f} MB)")
+        except Exception as e:
+            if path.exists():
+                path.unlink()
+            raise RuntimeError(
+                f"下载失败: {e}\n请手动下载:\n  {url}\n  保存到: {path}"
+            ) from e
+
+
+def synthesize_piper(args):
+    """使用本地 Piper TTS 合成所有口播段落。"""
+    _ensure_piper_model()
+    from piper import PiperVoice
+
+    print(f"Engine: Piper TTS (local)")
+    print(f"Loading model: {PIPER_MODEL_PATH}")
+    voice = PiperVoice.load(str(PIPER_MODEL_PATH))
+    print(f"Model loaded. Sample rate: {voice.config.sample_rate} Hz")
+
+    results = []
+    total_duration = 0.0
+
+    for seg_id, text in NARRATION_SEGMENTS.items():
+        output_path = ASSETS_DIR / f"{seg_id}.wav"
+        print(f"\n--- Synthesizing: {seg_id} ---")
+        print(f"  Text length: {len(text)} chars")
+
+        start_time = time.time()
+
+        with wave.open(str(output_path), "wb") as wf:
+            wf.setnchannels(1)
+            wf.setsampwidth(2)
+            wf.setframerate(voice.config.sample_rate)
+            voice.synthesize_wav(text, wf)
+
+        elapsed = time.time() - start_time
+        file_size = output_path.stat().st_size
+
+        with wave.open(str(output_path), "rb") as wf:
+            frames = wf.getnframes()
+            rate = wf.getframerate()
+            duration = frames / rate
+
+        total_duration += duration
+        results.append({
+            "segment_id": seg_id,
+            "output_file": str(output_path.name),
+            "text_chars": len(text),
+            "duration_seconds": round(duration, 2),
+            "file_size_bytes": file_size,
+            "synthesis_time_seconds": round(elapsed, 2),
+        })
+        print(f"  Duration: {duration:.2f}s | Size: {file_size} bytes | Synth time: {elapsed:.2f}s")
+
+    _write_manifest("piper-tts", "zh_CN-huayan-medium",
+                     voice.config.sample_rate, total_duration, results)
+
+
+# ============================================================
+# 公共工具
+# ============================================================
+
+def _write_manifest(engine: str, model: str, sample_rate: int,
+                    total_duration: float, results: list):
     manifest = {
-        "engine": "piper-tts",
-        "model": "zh_CN-huayan-medium",
-        "sample_rate": voice.config.sample_rate,
+        "engine": engine,
+        "model": model,
+        "sample_rate": sample_rate,
         "total_duration_seconds": round(total_duration, 2),
         "total_segments": len(results),
         "segments": results,
@@ -324,5 +546,49 @@ def synthesize_all():
     print(f"Assets dir: {ASSETS_DIR}")
 
 
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description="06-TTS: 合成口播音频（支持 CosyVoice 3 / Piper）"
+    )
+    parser.add_argument(
+        "--engine", type=str,
+        default=os.environ.get("TTS_ENGINE", "cosyvoice3"),
+        choices=["cosyvoice3", "piper"],
+        help="TTS 引擎（默认 cosyvoice3）。也可设置环境变量 TTS_ENGINE。",
+    )
+    # CosyVoice 3 参数
+    parser.add_argument(
+        "--cosyvoice-url", type=str,
+        default=os.environ.get("COSYVOICE_URL", DEFAULT_COSYVOICE_URL),
+        help=f"CosyVoice 3 服务地址（默认 {DEFAULT_COSYVOICE_URL}）。也可设置 COSYVOICE_URL。",
+    )
+    parser.add_argument(
+        "--cosyvoice-mode", type=str,
+        default=os.environ.get("COSYVOICE_MODE", "sft"),
+        choices=["sft", "zero_shot", "instruct2"],
+        help="CosyVoice 3 推理模式（默认 sft）。",
+    )
+    parser.add_argument(
+        "--cosyvoice-spk", type=str,
+        default=os.environ.get("COSYVOICE_SPK", "中文女"),
+        help="SFT 模式的说话人 ID（默认 '中文女'）。",
+    )
+    parser.add_argument(
+        "--cosyvoice-instruct", type=str,
+        default=os.environ.get("COSYVOICE_INSTRUCT", ""),
+        help="instruct2/zero_shot 模式的指令文本。",
+    )
+    parser.add_argument(
+        "--cosyvoice-prompt-wav", type=str,
+        default=os.environ.get("COSYVOICE_PROMPT_WAV", ""),
+        help="zero_shot/instruct2 模式的参考音频路径。",
+    )
+    return parser.parse_args()
+
+
 if __name__ == "__main__":
-    synthesize_all()
+    args = parse_args()
+    if args.engine == "cosyvoice3":
+        synthesize_cosyvoice3(args)
+    else:
+        synthesize_piper(args)

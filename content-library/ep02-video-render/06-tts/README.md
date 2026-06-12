@@ -5,33 +5,32 @@ source_workflow: /06-tts-synthesis
 upstream_inputs:
   - 04-script/README.md (status: draft)
   - shared/docs/remotion-spec.md
-engine: piper-tts
-model: zh_CN-huayan-medium
+engine: cosyvoice3 / piper-tts
+model: Fun-CosyVoice3-0.5B / zh_CN-huayan-medium
 ---
 
-# ep02 TTS 语音合成（Piper TTS 本地跑通）
+# ep02 TTS 语音合成
 
 ## 引擎选型
 
-|| 维度 | 值 |
-|------|---|
-| **当前引擎** | Piper TTS（本地、免费、零 API 依赖） |
-| **模型** | `zh_CN-huayan-medium`（63MB ONNX，中文女声，VITS 架构） |
-| **采样率** | 22050 Hz / 16bit 单声道 |
-| **后续升级** | 豆包/OpenAI TTS（需 API Key，中文情感更自然、支持逐字时间戳） |
+脚本支持两种 TTS 引擎，默认使用 CosyVoice 3：
 
-### Piper TTS 优势（跑通阶段）
+| 引擎 | 模型 | 采样率 | 部署方式 | 中文自然度 |
+|------|------|--------|---------|-----------|
+| **CosyVoice 3**（默认） | `Fun-CosyVoice3-0.5B` | 24000 Hz | 远程 GPU 服务 | ★★★★★ |
+| Piper TTS（fallback） | `zh_CN-huayan-medium` | 22050 Hz | 本地 CPU | ★★☆☆☆ |
 
-- **零成本**：无需 API Key，完全本地推理
-- **速度快**：16 段口播合成总耗时约 13 秒（CPU）
-- **可复现**：同一模型同一文本每次输出一致
-- **格式兼容**：直接输出 WAV，可无缝对接 07 组装阶段
+### CosyVoice 3（推荐）
 
-### 已知局限
+- **高自然度**：阿里通义语音团队开源模型，中文表现接近真人
+- **多模式**：SFT 预训练音色 / 零样本克隆 / 自然语言控制
+- **远程服务**：在 GPU 机器上部署 FastAPI 服务，本机通过 HTTP 调用
 
-- 中文自然度不如商业 TTS（豆包/Azure/OpenAI）
-- 英文术语发音偏差（Remotion、SSR 等）无 SSML 精调能力
-- 无逐字时间戳输出（后续 08 字幕阶段需额外 Whisper 对齐）
+### Piper TTS（备选）
+
+- **零成本**：无需 GPU、无需 API Key，完全本地推理
+- **速度快**：16 段合成约 13 秒（CPU）
+- **局限**：中文自然度机械，英文术语发音偏差
 
 ---
 
@@ -62,12 +61,24 @@ model: zh_CN-huayan-medium
 ## 运行方式
 
 ```bash
-# 前置
-pip install piper-tts  # 包含 onnxruntime + espeak-ng
-
-# 合成（自动下载模型到 models/ 目录）
 cd content-library/ep02-video-render/06-tts
+
+# === CosyVoice 3（默认，需远程 GPU 服务） ===
+python synthesize.py --engine cosyvoice3 --cosyvoice-url http://YOUR_GPU_SERVER:9880
+
+# 也可通过环境变量配置
+export COSYVOICE_URL=http://YOUR_GPU_SERVER:9880
 python synthesize.py
+
+# 可选参数：
+#   --cosyvoice-mode sft|zero_shot|instruct2  推理模式（默认 sft）
+#   --cosyvoice-spk "中文女"                   SFT 模式说话人 ID
+#   --cosyvoice-instruct "用轻快的语气"        instruct2 模式指令
+#   --cosyvoice-prompt-wav ref.wav             零样本克隆参考音频
+
+# === Piper TTS（备选，本地运行） ===
+pip install piper-tts
+python synthesize.py --engine piper
 ```
 
 产出在 `assets/` 目录，含 16 个 WAV 文件 + `manifest.json`。
@@ -124,32 +135,28 @@ content-library/ep02-video-render/06-tts/
 
 ## 下一步
 
-1. **试听审核**：人工试听各段 WAV，确认口播节奏和英文术语可接受度
-2. **引擎升级**（可选）：若 Piper 质量不满足要求，切换豆包 TTS（需 `DOUBAO_SPEECH_API_KEY`）
-3. **推进 07 组装**：将 `assets/*.wav` 作为口播音轨输入 07 视频组装阶段
-4. **Whisper 对齐**（08 字幕阶段）：对 WAV 文件做 Whisper 时间戳提取，生成逐字字幕
+1. **部署 CosyVoice 3 服务**：在 GPU 机器上部署并启动 FastAPI 服务
+2. **重新合成**：用 CosyVoice 3 重新合成 16 段口播（替换 Piper 产出）
+3. **试听审核**：人工试听各段 WAV，确认口播节奏和自然度
+4. **推进 07 组装**：将 `assets/*.wav` 作为口播音轨输入 07 视频组装阶段
+5. **Whisper 对齐**（08 字幕阶段）：对 WAV 文件做 Whisper 时间戳提取，生成逐字字幕
 
 ```json
 {
   "stage": "06-tts-synthesis",
   "platform": "bilibili",
-  "engine": "piper-tts",
-  "model": "zh_CN-huayan-medium",
-  "sample_rate_hz": 22050,
+  "engines": ["cosyvoice3", "piper-tts"],
+  "default_engine": "cosyvoice3",
   "total_segments": 16,
-  "total_duration_seconds": 553.82,
   "total_text_chars": 3764,
-  "synthesis_config": {
-    "length_scale": 1.0,
-    "noise_scale": 0.667,
-    "noise_w_scale": 0.8
+  "cosyvoice3_config": {
+    "model": "Fun-CosyVoice3-0.5B",
+    "sample_rate_hz": 24000,
+    "modes": ["sft", "zero_shot", "instruct2"]
   },
-  "quality_notes": [
-    "本地引擎零成本跑通，验证流程可行性",
-    "中文自然度可接受但不如商业TTS",
-    "英文术语发音偏差待升级引擎后SSML修正",
-    "无逐字时间戳，后续字幕需Whisper补充"
-  ],
-  "upgrade_path": "doubao_tts / openai_tts（需API Key）"
+  "piper_config": {
+    "model": "zh_CN-huayan-medium",
+    "sample_rate_hz": 22050
+  }
 }
 ```

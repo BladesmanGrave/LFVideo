@@ -2,3 +2,5 @@
 *.onnx
 *.onnx.json
 hub/
+models--*/
+CACHEDIR.TAG
