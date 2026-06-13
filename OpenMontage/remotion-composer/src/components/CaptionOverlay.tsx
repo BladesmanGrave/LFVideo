@@ -208,7 +208,7 @@ export const CaptionOverlay: React.FC<CaptionOverlayProps> = ({
   });
 
   return (
-    <AbsoluteFill>
+    <AbsoluteFill style={{zIndex: 100}}>
       {pages.map((page, i) => {
         const fromFrame = Math.round((page.startMs / 1000) * fps);
         const nextStart = pages[i + 1]?.startMs ?? page.endMs + 500;

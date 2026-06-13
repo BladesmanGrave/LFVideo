@@ -38,15 +38,16 @@ const TableCell: React.FC<{
 	colIndex: number;
 	rowIndex: number;
 	highlightActive: boolean;
-}> = ({content, isHeader = false, isWinner = false, winColor = COLORS.accent[1], align = 'left', colIndex, rowIndex, highlightActive}) => {
+	dense?: boolean;
+}> = ({content, isHeader = false, isWinner = false, winColor = COLORS.accent[1], align = 'left', colIndex, rowIndex, highlightActive, dense = false}) => {
 	const blinkAnimName = `cell-blink-${rowIndex}-${colIndex}`;
 
 	return (
 		<div
 			style={{
 				flex: colIndex === 0 ? 1.2 : 1.5,
-				padding: `${SPACING.md}px ${SPACING.lg}px`,
-				fontSize: isHeader ? FONT_SIZE.body + 2 : FONT_SIZE.body - 1,
+				padding: `${dense ? SPACING.sm : SPACING.md}px ${SPACING.lg}px`,
+				fontSize: isHeader ? FONT_SIZE.body + (dense ? 0 : 2) : FONT_SIZE.body - (dense ? 2 : 1),
 				fontWeight: isHeader ? 900 : colIndex === 0 ? 800 : 500,
 				color: isHeader 
 					? COLORS.text.primary 
@@ -99,6 +100,10 @@ export const TableScene: React.FC<Props> = ({
 	const frame = useCurrentFrame();
 	const {fps} = useVideoConfig();
 
+	// Compact layout once the table has many rows, so tall tables stay inside
+	// the frame and clear of the bottom caption safe-area.
+	const dense = rows.length > 4;
+
 	// Header row pop-up animation
 	const headerProgress = spring({
 		fps,
@@ -117,7 +122,9 @@ export const TableScene: React.FC<Props> = ({
 			<AbsoluteFill
 				style={{
 					fontFamily: FONT_FAMILY,
-					padding: `${SPACING.xl}px ${SPACING.gutter}px`,
+					// Reserve a bottom safe-area (~180px) for the caption overlay so
+					// tall tables never crowd or sit under the burned-in subtitles.
+					padding: `${SPACING.xl}px ${SPACING.gutter}px 180px`,
 					display: 'flex',
 					flexDirection: 'column',
 					justifyContent: 'center',
@@ -136,7 +143,7 @@ export const TableScene: React.FC<Props> = ({
 						backdropFilter: 'blur(16px)',
 						boxShadow: '0 20px 50px -10px rgba(0, 0, 0, 0.7)',
 						overflow: 'hidden',
-						marginTop: SPACING.xl,
+						marginTop: dense ? SPACING.lg : SPACING.xl,
 					}}
 				>
 					{/* Table Header */}
@@ -159,6 +166,7 @@ export const TableScene: React.FC<Props> = ({
 								rowIndex={0}
 								align={colIndex === 0 ? 'left' : 'center'}
 								highlightActive={false}
+								dense={dense}
 							/>
 						))}
 					</div>
@@ -195,6 +203,7 @@ export const TableScene: React.FC<Props> = ({
 									rowIndex={rowIndex + 1}
 									align="left"
 									highlightActive={false}
+									dense={dense}
 								/>
 
 								{/* Cursor Cell */}
@@ -206,6 +215,7 @@ export const TableScene: React.FC<Props> = ({
 									winColor={COLORS.accent[0]}
 									align="center"
 									highlightActive={highlightActive}
+									dense={dense}
 								/>
 
 								{/* Windsurf Cell */}
@@ -217,6 +227,7 @@ export const TableScene: React.FC<Props> = ({
 									winColor={COLORS.accent[1]}
 									align="center"
 									highlightActive={highlightActive}
+									dense={dense}
 								/>
 							</div>
 						);
