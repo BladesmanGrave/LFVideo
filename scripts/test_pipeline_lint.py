@@ -137,6 +137,46 @@ def test_draft_violation_warns_but_does_not_error(tmp_path: Path) -> None:
     assert any("anti-hype" in w for w in report.warnings)
 
 
+def _write_named_doc(
+    ep: Path, dirname: str, filename: str, frontmatter: str, body: str = "# Title\n"
+) -> None:
+    stage = ep / dirname
+    stage.mkdir(parents=True, exist_ok=True)
+    (stage / filename).write_text(f"---\n{frontmatter}\n---\n\n{body}", encoding="utf-8")
+
+
+def test_stage_doc_falls_back_to_numbered_md(tmp_path: Path) -> None:
+    ep = tmp_path / "ep99-test"
+    _write_stage(ep, "04-script", "stage: 04-script\nstatus: approved", _script_block(3))
+    # The 05 stage keeps its doc as 05-b-roll.md (no README.md in the folder).
+    _write_named_doc(
+        ep,
+        "05-assembly",
+        "05-b-roll.md",
+        "stage: 05-b-roll-recording\nstatus: suspended\n"
+        "upstream_inputs:\n  - 04-script/README.md (status: approved)",
+        "# ep B 轨录屏\n",
+    )
+    # 07 references the 05 doc by file path and by directory; both must resolve.
+    _write_stage(
+        ep,
+        "07-assembly",
+        "stage: 07-video-assembly\nstatus: approved\nupstream_inputs:\n"
+        "  - 04-script/README.md (status: approved)\n"
+        "  - 05-assembly/05-b-roll.md (status: suspended)",
+        '# ep 组装\n\n```json\n{"stage":"07-video-assembly","total_scenes":3}\n```\n',
+    )
+    report = _lint(ep)
+    assert report.errors == [], "\n".join(report.errors)
+    # The 05 stage must be discovered despite having no README.md.
+    stages = P.load_stages(ep)
+    assert any(
+        s.dirname == "05-assembly" and s.stage == "05-b-roll-recording" for s in stages
+    )
+    # A bare directory reference resolves to the numbered doc too.
+    assert P._resolve_upstream_status(ep, "05-assembly/") == "suspended"
+
+
 def test_real_ep02_has_no_errors() -> None:
     """The production chain for ep02 must lint clean after the guardrail fixes."""
     ep = REPO_ROOT / "content-library" / "ep02-video-render"

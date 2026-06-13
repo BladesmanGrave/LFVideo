@@ -4,19 +4,21 @@ status: approved
 source_workflow: /07-video-assembly
 upstream_inputs:
   - 04-script/README.md (status: approved)
-  - 05-b-roll/assets/ (status: suspended — A轨兜底)
+  - 05-assembly/05-b-roll.md (status: suspended — A轨兜底)
   - 06-tts/assets/ (status: approved)
   - shared/docs/remotion-spec.md
 ---
 
 # ep02 视频组装方案
 
+> **唯一真源 = 04 脚本（approved）。** 本组装方案逐条映射 04 契约块的 16 段 `sections[]`（禁止增删/合并/改写/重排），B 轨三镜逐条来自 `05-assembly/05-b-roll.md`；本期 B 轨 `suspended`，全部以 A 轨兜底。
+
 ## 制作概要
 
 | 维度 | 值 |
 |------|---|
 | **轨道** | A 轨为主（概念动画全自动），B 轨挂起（A 轨兜底） |
-| **时长** | ~10:45（基于 06-TTS 合成 553.82s + 画面过渡） |
+| **时长** | ~9:18 纯内容（06-TTS 实合成 558s + 画面过渡）；04 估时 10:45（645s）为参考上限 |
 | **分辨率** | 1920×1080 @ 30fps（B站 16:9 主版本） |
 | **复用模板** | IntroScene / OutroScene / ConceptScene / TableScene / TimelineScene / SplitLayout / TerminalScene |
 | **新增组件** | 无（全复用 remotion-spec.md §1.9 已有组件） |
@@ -25,26 +27,26 @@ upstream_inputs:
 
 ## Remotion 结构（场景编排表）
 
-| # | 时间区间 | 场景 | 组件 | 数据来源 | 轨道 |
-|---|---------|------|------|---------|------|
-| 1 | 0:00–0:30 | 开头钩子 | `@IntroScene` | S1_intro.wav + title/subtitle props | A |
-| 2 | 0:30–1:13 | 范式与痛点 | `@ConceptScene` | S2a_paradigm.wav + bullet_points | A |
-| 3 | 1:13–1:34 | 帧即状态 | `@ConceptScene` | S2b_frame_as_state.wav + diagram_data | A |
-| 4 | 1:34–2:18 | 六条路线 | `@TableScene` | S2c_six_routes.wav + matrix_data | A |
-| 5 | 2:18–3:19 | 判断层矩阵 | `@TableScene` | S3a_judgment_matrix.wav + evaluation_data | A |
-| 6 | 3:19–4:00 | 选型四理由 | `@ConceptScene` | S3b_remotion_reasons.wav + reasons_list | A |
-| 7 | 4:00–4:21 | Remotion vs HyperFrames | `@SplitLayout(@ComparisonCard)` | S3c_comparison.wav + comparison_data | A |
-| 8 | 4:21–4:49 | 选型代价 | `@ConceptScene` | S3d_tradeoffs.wav + tradeoff_points | A |
-| 9 | 4:49–5:20 | 七阶段流水线 | `@TimelineScene` | S4a_pipeline.wav + stages_array | A |
-| 10 | 5:20–5:44 | 三件套 | `@ConceptScene` | S4b_three_piece.wav + three_piece_data | A |
-| 11 | 5:44–6:08 | 编排器伪代码 | `@TerminalScene` | S4c_orchestrator.wav + code_snippet | A |
-| 12 | 6:08–6:49 | A/B轨机制 | `@SplitLayout` | S4d_ab_track.wav + ab_comparison | A |
-| 13 | 6:49–7:23 | 数据驱动 vs 手写 | `@SplitLayout(@ComparisonCard)` | S5a_data_driven.wav + code_comparison | A (B轨兜底) |
-| 14 | 7:23–8:06 | SSR守卫 | `@SplitLayout` + `@TerminalScene` | S5b_ssr_guard.wav + guard_code | A (B轨兜底) |
-| 15 | 8:06–8:45 | AI出片 | `@ConceptScene` + `@TerminalScene` | S5c_ai_render.wav + render_commands | A (B轨兜底) |
-| 16 | 8:45–9:18 | 结尾CTA | `@OutroScene` | S6_cta.wav + cta_props | A |
+| # | 04 段落 | 时间区间 | 场景 | 组件 | 数据来源 | 轨道 / B 轨素材 |
+|---|--------|---------|------|------|---------|------|
+| 1 | 1 | 0:00–0:30 | 开头钩子 | `@IntroScene` | S1_intro.wav + title/subtitle props | A |
+| 2 | 2a | 0:30–1:13 | 范式与痛点 | `@ConceptScene` | S2a_paradigm.wav + bullet_points | A |
+| 3 | 2b | 1:13–1:34 | 帧即状态 | `@ConceptScene` | S2b_frame_as_state.wav + diagram_data | A |
+| 4 | 2c | 1:34–2:18 | 六条路线 | `@TableScene` | S2c_six_routes.wav + matrix_data | A |
+| 5 | 3a | 2:18–3:19 | 判断层矩阵 | `@TableScene` | S3a_judgment_matrix.wav + evaluation_data | A |
+| 6 | 3b | 3:19–4:00 | 选型四理由 | `@ConceptScene` | S3b_remotion_reasons.wav + reasons_list | A |
+| 7 | 3c | 4:00–4:21 | Remotion vs HyperFrames | `@SplitLayout(@ComparisonCard)` | S3c_comparison.wav + comparison_data | A |
+| 8 | 3d | 4:21–4:49 | 选型代价 | `@ConceptScene` | S3d_tradeoffs.wav + tradeoff_points | A |
+| 9 | 4a | 4:49–5:20 | 七阶段流水线 | `@TimelineScene` | S4a_pipeline.wav + stages_array | A |
+| 10 | 4b | 5:20–5:44 | 三件套 | `@ConceptScene` | S4b_three_piece.wav + three_piece_data | A |
+| 11 | 4c | 5:44–6:08 | 编排器伪代码 | `@TerminalScene` | S4c_orchestrator.wav + code_snippet | A |
+| 12 | 4d | 6:08–6:49 | A/B轨机制 | `@SplitLayout` | S4d_ab_track.wav + ab_comparison | A |
+| 13 | 5a | 6:49–7:23 | 数据驱动 vs 手写 | `@SplitLayout(@ComparisonCard)` | S5a_data_driven.wav + code_comparison | A（B轨 `b-ide-data-driven` 兜底） |
+| 14 | 5b | 7:23–8:06 | SSR守卫 | `@SplitLayout` + `@TerminalScene` | S5b_ssr_guard.wav + guard_code | A（B轨 `b-ide-ssr-guard` 兜底） |
+| 15 | 5c | 8:06–8:45 | AI出片 | `@ConceptScene` + `@TerminalScene` | S5c_ai_render.wav + render_commands | A（B轨 `b-terminal-render` 兜底） |
+| 16 | 6 | 8:45–9:18 | 结尾CTA | `@OutroScene` | S6_cta.wav + cta_props | A |
 
-> 时间区间基于 TTS 合成时长 + 2s 场景过渡。总计约 9:18 纯内容 + 过渡 ≈ 10:00。
+> 上表 16 行与 04 脚本 `sections[]` 的 16 段（id：1 / 2a / 2b / 2c / 3a / 3b / 3c / 3d / 4a / 4b / 4c / 4d / 5a / 5b / 5c / 6）**一一对应**，不增删、不合并、不改写。时间区间基于 TTS 合成时长 + 2s 场景过渡，总计约 9:18 纯内容 + 过渡 ≈ 10:00。
 
 ---
 
@@ -353,13 +355,13 @@ npx remotion render --composition=ep02-video-render-vertical --output=out/ep02-v
 
 ## 需人工提供的素材（B 轨）
 
-> 05 B轨录屏阶段当前 `suspended`，以下 B 轨素材使用 A 轨兜底：
+> 来源 = `05-assembly/05-b-roll.md`（阶段 `05-b-roll-recording`，当前 `suspended`）。以下三镜逐条对应 04 `b_track_assets_required`，本期均以 A 轨兜底；补录后把 05 改回 `approved` 即可替换：
 
-| 素材 ID | 描述 | A 轨兜底方案 |
-|---------|------|------------|
-| b-ide-data-driven | IDE 录屏：数据驱动复用 @ComparisonCard | `@TerminalScene` 渲染代码对比 |
-| b-ide-ssr-guard | IDE 录屏：typeof window 守卫 | `@TerminalScene` 渲染 before/after |
-| b-terminal-render | 终端录屏：npx remotion render 出片 | `@TerminalScene` 渲染命令 + 进度输出 |
+| 素材 ID | 消费段落 | 描述 | A 轨兜底方案 |
+|---------|------|------|------------|
+| b-ide-data-driven | 13 / 5a | IDE 录屏：数据驱动复用 @ComparisonCard（✅）vs 从零手写（❌） | `@TerminalScene` 渲染代码对比 |
+| b-ide-ssr-guard | 14 / 5b | IDE 录屏：SSR window 崩溃 → typeof 守卫 → MDC 规则 | `@SplitLayout` + `@TerminalScene` before/after |
+| b-terminal-render | 15 / 5c | 终端录屏：npx remotion render 出片（可选） | `@TerminalScene` 渲染命令 + 进度输出 |
 
 ---
 

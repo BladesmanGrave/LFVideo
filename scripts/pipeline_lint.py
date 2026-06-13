@@ -129,13 +129,27 @@ def _parse_readme(path: Path) -> tuple[dict, list[str], dict | None, str | None]
     return frontmatter, upstream, contract, h1
 
 
+def _stage_doc(stage_dir: Path) -> Path | None:
+    """Return the canonical doc for a stage folder.
+
+    The convention is ``README.md``; some stages keep their doc under a
+    stage-numbered filename instead (e.g. ``05-assembly/05-b-roll.md``), so we
+    fall back to a ``NN-*.md`` file when ``README.md`` is absent.
+    """
+    readme = stage_dir / "README.md"
+    if readme.exists():
+        return readme
+    numbered = sorted(p for p in stage_dir.glob("*.md") if re.match(r"\d+-", p.name))
+    return numbered[0] if numbered else None
+
+
 def load_stages(episode_dir: Path) -> list[Stage]:
     stages: list[Stage] = []
     for child in sorted(episode_dir.iterdir()):
         if not child.is_dir():
             continue
-        readme = child / "README.md"
-        if not readme.exists():
+        readme = _stage_doc(child)
+        if readme is None:
             continue
         num_match = re.match(r"(\d+)", child.name)
         if not num_match:
@@ -170,7 +184,8 @@ def _resolve_upstream_status(episode_dir: Path, rel_path: str) -> str | None:
             if stage_dir.parent.resolve() == episode_dir.resolve():
                 break
             stage_dir = stage_dir.parent
-        candidates.append(stage_dir / "README.md")
+        doc = _stage_doc(stage_dir)
+        candidates.append(doc if doc is not None else stage_dir / "README.md")
     for cand in candidates:
         if cand.exists():
             fm, _, _, _ = _parse_readme(cand)
