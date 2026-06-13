@@ -4,1790 +4,1720 @@
     {
       "id": "scene-1",
       "source": "",
-      "type": "intro_scene",
       "in_seconds": 0.0,
-      "out_seconds": 9.267,
-      "title": "代码即视频",
-      "subtitle": "如何用 100 行 React 编译卡点与图表动效？",
+      "out_seconds": 25.067,
+      "type": "intro_scene",
+      "title": "代码即视频（Video-as-Code）",
+      "subtitle": "【AI 视频自动化生产线】第 2 期：渲染引擎篇",
       "background": "particles"
     },
     {
       "id": "scene-2a",
       "source": "",
+      "in_seconds": 25.067,
+      "out_seconds": 67.6,
       "type": "concept_scene",
-      "in_seconds": 9.267,
-      "out_seconds": 15.367,
-      "eyebrow": "翻车现场",
-      "title": "SSR 渲染的致命陷阱",
+      "eyebrow": "核心概念：范式与痛点",
+      "title": "传统剪辑 = 轨道 + 绝对时间轴 → 低 ROI 体力活",
+      "background": "gradient",
       "items": [
         {
-          "label": "ERROR",
-          "title": "window is not defined",
-          "desc": "Node 端无 DOM 环境，立即崩溃",
-          "icon": "💥"
+          "label": "VERSION",
+          "title": "可版本控制",
+          "desc": "视频就是文本（代码/JSON/YAML），能 diff、能 review、能 git 回滚",
+          "icon": "📝"
         },
         {
-          "label": "ROOT CAUSE",
-          "title": "Puppeteer 预渲染阶段",
-          "desc": "Remotion SSR 截图时组件崩溃",
-          "icon": "🔍"
+          "label": "BATCH",
+          "title": "可参数化批量复用",
+          "desc": "同一套模板换一份数据，批量产出几十期结构一致的视频",
+          "icon": "🔁"
         },
         {
-          "label": "IMPACT",
-          "title": "编译流程中断",
-          "desc": "npx remotion render 红屏阻断",
-          "icon": "🚫"
+          "label": "AI",
+          "title": "AI 友好",
+          "desc": "让 AI 拖时间轴很难，让 AI 写代码/改数据/调 CSS 是它最擅长的事",
+          "icon": "🤖"
         }
-      ],
-      "background": "gradient"
+      ]
     },
     {
       "id": "scene-2b",
       "source": "",
+      "in_seconds": 67.6,
+      "out_seconds": 88.367,
       "type": "concept_scene",
-      "in_seconds": 15.367,
-      "out_seconds": 17.767,
-      "eyebrow": "翻车现场",
-      "title": "SSR 渲染的致命陷阱",
+      "eyebrow": "一句话本质",
+      "title": "帧即状态（Frame as State）",
+      "background": "gradient",
       "items": [
         {
-          "label": "ERROR",
-          "title": "window is not defined",
-          "desc": "Node 端无 DOM 环境，立即崩溃",
-          "icon": "💥"
+          "label": "INPUT",
+          "title": "声明式代码/数据",
+          "desc": "用代码或数据把画面描述出来",
+          "icon": "📄"
         },
         {
-          "label": "ROOT CAUSE",
-          "title": "Puppeteer 预渲染阶段",
-          "desc": "Remotion SSR 截图时组件崩溃",
-          "icon": "🔍"
+          "label": "COMPILE",
+          "title": "渲染器编译成帧",
+          "desc": "给定时间点，渲染器算出该时刻画面长什么样",
+          "icon": "⚙️"
         },
         {
-          "label": "IMPACT",
-          "title": "编译流程中断",
-          "desc": "npx remotion render 红屏阻断",
-          "icon": "🚫"
+          "label": "OUTPUT",
+          "title": "合成视频",
+          "desc": "帧序列合成高清 MP4，全流程可自动化",
+          "icon": "🎬"
         }
-      ],
-      "background": "gradient"
+      ]
     },
     {
       "id": "scene-2c",
       "source": "",
+      "in_seconds": 88.367,
+      "out_seconds": 131.733,
       "type": "table_scene",
-      "in_seconds": 17.767,
-      "out_seconds": 22.633,
-      "eyebrow": "被动约束",
-      "title": "MDC Rules 规则降维打击",
+      "eyebrow": "不止 Remotion",
+      "title": "Video-as-Code 六条技术路线",
+      "background": "grid",
       "headers": [
-        "评估维度",
-        "❌ 无规则约束",
-        "✅ 加载 MDC Rules"
+        "路线",
+        "代表项目",
+        "典型场景"
       ],
       "rows": [
         {
-          "feature": "开发心智",
-          "cursor": "人盯代码，容易遗忘",
-          "windsurf": "规则自动把关，无感守卫",
-          "win": "windsurf"
+          "feature": "DOM / React 渲染",
+          "cursor": "Remotion",
+          "windsurf": "前端栈、复杂排版、模板复用",
+          "win": "neutral"
         },
         {
-          "feature": "AI 自愈率",
-          "cursor": "4-5 轮循环报错崩溃",
-          "windsurf": "一次性直接编译通过",
-          "win": "windsurf"
+          "feature": "TS 声明式动画",
+          "cursor": "Motion Canvas / Revideo",
+          "windsurf": "代码演示、时序动画",
+          "win": "neutral"
         },
         {
-          "feature": "长期收益",
-          "cursor": "无沉淀，无法复用",
-          "windsurf": "形成技术资产，多项目共享",
-          "win": "windsurf"
+          "feature": "程序化数学动画",
+          "cursor": "Manim",
+          "windsurf": "数学/算法可视化",
+          "win": "neutral"
+        },
+        {
+          "feature": "像素/合成脚本",
+          "cursor": "MoviePy",
+          "windsurf": "纯 Python、简单拼接",
+          "win": "neutral"
+        },
+        {
+          "feature": "Canvas/游戏引擎",
+          "cursor": "PixiJS / Cocos2d",
+          "windsurf": "粒子、游戏化动画",
+          "win": "neutral"
+        },
+        {
+          "feature": "命令式合成",
+          "cursor": "FFmpeg + 脚本",
+          "windsurf": "批量转码、字幕烧录",
+          "win": "neutral"
         }
-      ],
-      "background": "gradient"
+      ]
     },
     {
       "id": "scene-3a",
       "source": "",
+      "in_seconds": 131.733,
+      "out_seconds": 191.467,
       "type": "table_scene",
-      "in_seconds": 22.633,
-      "out_seconds": 27.067,
-      "eyebrow": "被动约束",
-      "title": "MDC Rules 规则降维打击",
+      "eyebrow": "判断层 = 边界，非中立百科",
+      "title": "六个方案：适用场景 / 已知坑",
+      "background": "grid",
       "headers": [
-        "评估维度",
-        "❌ 无规则约束",
-        "✅ 加载 MDC Rules"
+        "方案",
+        "适用场景",
+        "已知坑"
       ],
       "rows": [
         {
-          "feature": "开发心智",
-          "cursor": "人盯代码，容易遗忘",
-          "windsurf": "规则自动把关，无感守卫",
-          "win": "windsurf"
+          "feature": "Remotion",
+          "cursor": "前端栈、复杂 CSS/SVG、跨期模板复用",
+          "windsurf": "顶层读 window/document 崩溃；BUSL 授权",
+          "win": "neutral"
         },
         {
-          "feature": "AI 自愈率",
-          "cursor": "4-5 轮循环报错崩溃",
-          "windsurf": "一次性直接编译通过",
-          "win": "windsurf"
+          "feature": "Motion Canvas / Revideo",
+          "cursor": "代码演示、精确时序编排",
+          "windsurf": "生态较小，模板需自建",
+          "win": "neutral"
         },
         {
-          "feature": "长期收益",
-          "cursor": "无沉淀，无法复用",
-          "windsurf": "形成技术资产，多项目共享",
-          "win": "windsurf"
+          "feature": "Manim",
+          "cursor": "数学/算法/公式可视化",
+          "windsurf": "学习曲线陡、排版弱、渲染慢",
+          "win": "neutral"
+        },
+        {
+          "feature": "MoviePy",
+          "cursor": "纯 Python、简单拼接/裁剪",
+          "windsurf": "文本布局繁琐、多层内存大",
+          "win": "neutral"
+        },
+        {
+          "feature": "PixiJS / Cocos2d",
+          "cursor": "游戏类复杂粒子动画",
+          "windsurf": "文本换行与 DOM 对齐复杂",
+          "win": "neutral"
+        },
+        {
+          "feature": "FFmpeg + 脚本",
+          "cursor": "批量转码、轻量字幕烧录",
+          "windsurf": "filtergraph 晦涩、调试困难",
+          "win": "neutral"
         }
-      ],
-      "background": "gradient"
+      ]
     },
     {
       "id": "scene-3b",
       "source": "",
+      "in_seconds": 191.467,
+      "out_seconds": 232.433,
       "type": "concept_scene",
-      "in_seconds": 27.067,
-      "out_seconds": 32.0,
-      "eyebrow": "翻车现场",
-      "title": "SSR 渲染的致命陷阱",
+      "eyebrow": "核心约束：固定模板 + AI 接管 + 跨期可维护",
+      "title": "为什么选 Remotion？",
+      "background": "gradient",
       "items": [
         {
-          "label": "ERROR",
-          "title": "window is not defined",
-          "desc": "Node 端无 DOM 环境，立即崩溃",
-          "icon": "💥"
+          "label": "DECISIVE",
+          "title": "数据驱动模板，类型安全跨期复用",
+          "desc": "data.ts → Episode.tsx → template/ 四层结构，TS 保证换数据时格式不出错，改一处主题全期生效",
+          "icon": "🏗️"
         },
         {
-          "label": "ROOT CAUSE",
-          "title": "Puppeteer 预渲染阶段",
-          "desc": "Remotion SSR 截图时组件崩溃",
-          "icon": "🔍"
+          "label": "AI+CLI",
+          "title": "AI Agent 友好 + CLI 原生自动化",
+          "desc": "AI 只填数据+微调 CSS，幻觉最小；npx remotion render 纯命令行可 subprocess",
+          "icon": "🤖"
         },
         {
-          "label": "IMPACT",
-          "title": "编译流程中断",
-          "desc": "npx remotion render 红屏阻断",
-          "icon": "🚫"
+          "label": "WEB",
+          "title": "网页生态红利",
+          "desc": "完整 CSS/SVG/Flexbox/动效库随手可用，信息密度与排版自由度远超像素/Canvas 方案",
+          "icon": "🌐"
         }
-      ],
-      "background": "gradient"
+      ]
     },
     {
       "id": "scene-3c",
       "source": "",
+      "in_seconds": 232.433,
+      "out_seconds": 253.333,
       "type": "table_scene",
-      "in_seconds": 32.0,
-      "out_seconds": 34.4,
-      "eyebrow": "被动约束",
-      "title": "MDC Rules 规则降维打击",
+      "eyebrow": "模板复用 + AI 接管维度",
+      "title": "Remotion ✅ vs HyperFrames ❌",
+      "background": "grid",
       "headers": [
-        "评估维度",
-        "❌ 无规则约束",
-        "✅ 加载 MDC Rules"
+        "对比维度",
+        "Remotion ✅",
+        "HyperFrames ❌"
       ],
       "rows": [
         {
-          "feature": "开发心智",
-          "cursor": "人盯代码，容易遗忘",
-          "windsurf": "规则自动把关，无感守卫",
-          "win": "windsurf"
+          "feature": "模板复用 / 类型安全",
+          "cursor": "TS 约束、跨期安全",
+          "windsurf": "HTML 无类型检查",
+          "win": "cursor"
         },
         {
-          "feature": "AI 自愈率",
-          "cursor": "4-5 轮循环报错崩溃",
-          "windsurf": "一次性直接编译通过",
-          "win": "windsurf"
+          "feature": "AI 友好度",
+          "cursor": "结构稳定、AI 只填数据",
+          "windsurf": "直接写 HTML，结构易漂移",
+          "win": "cursor"
         },
         {
-          "feature": "长期收益",
-          "cursor": "无沉淀，无法复用",
-          "windsurf": "形成技术资产，多项目共享",
-          "win": "windsurf"
+          "feature": "长期维护",
+          "cursor": "改一处全期生效",
+          "windsurf": "10 期后维护困难",
+          "win": "cursor"
         }
-      ],
-      "background": "gradient"
+      ]
     },
     {
       "id": "scene-3d",
       "source": "",
+      "in_seconds": 253.333,
+      "out_seconds": 280.6,
       "type": "concept_scene",
-      "in_seconds": 34.4,
-      "out_seconds": 36.067,
-      "eyebrow": "翻车现场",
-      "title": "SSR 渲染的致命陷阱",
+      "eyebrow": "如实交代",
+      "title": "选型代价（都能兜住）",
+      "background": "gradient",
       "items": [
         {
-          "label": "ERROR",
-          "title": "window is not defined",
-          "desc": "Node 端无 DOM 环境，立即崩溃",
-          "icon": "💥"
+          "label": "REACT",
+          "title": "基于 React 技术栈",
+          "desc": "本项目让 AI 写组件、填数据，人只把控架构与内容取舍",
+          "icon": "⚛️"
         },
         {
-          "label": "ROOT CAUSE",
-          "title": "Puppeteer 预渲染阶段",
-          "desc": "Remotion SSR 截图时组件崩溃",
-          "icon": "🔍"
+          "label": "BUSL",
+          "title": "BUSL 商业授权",
+          "desc": "规模化商用需付费，当前规模无影响",
+          "icon": "📜"
         },
         {
-          "label": "IMPACT",
-          "title": "编译流程中断",
-          "desc": "npx remotion render 红屏阻断",
-          "icon": "🚫"
+          "label": "SSR",
+          "title": "SSR 环境约束",
+          "desc": "Node 端求值读 window 会崩——用一条 MDC 规则交给 AI 自动规避，落地见第五段",
+          "icon": "🛡️"
         }
-      ],
-      "background": "gradient"
+      ]
     },
     {
       "id": "scene-4a",
       "source": "",
+      "in_seconds": 280.6,
+      "out_seconds": 310.167,
       "type": "timeline_scene",
-      "in_seconds": 36.067,
-      "out_seconds": 41.933,
-      "eyebrow": "底层机制",
-      "title": "Frame 与 Seconds 的数学映射",
+      "eyebrow": "流程即代码（Process-as-Code）",
+      "title": "七阶段流水线（01 → 07）",
+      "background": "grid",
       "events": [
         {
-          "year": "0",
-          "title": "起始帧",
-          "desc": "Frame = 0",
-          "icon": "⏱️"
+          "year": "01",
+          "title": "选题分析",
+          "desc": "选题分析师",
+          "icon": "✅"
         },
         {
-          "year": "1s",
-          "title": "30帧",
-          "desc": "1秒 @ 30fps",
+          "year": "02",
+          "title": "内容策划",
+          "desc": "内容策划师",
+          "icon": "✅"
+        },
+        {
+          "year": "03",
+          "title": "B站视听策划",
+          "desc": "视觉策划师 · 当前",
           "icon": "🎬"
         },
         {
-          "year": "2s",
-          "title": "60帧",
-          "desc": "2秒 @ 30fps",
-          "icon": "⏯️"
+          "year": "04",
+          "title": "脚本撰写",
+          "desc": "文案撰稿人",
+          "icon": "✍️"
         },
         {
-          "year": "4s",
-          "title": "120帧",
-          "desc": "useCurrentFrame() 返回值",
-          "icon": "🎯"
+          "year": "05",
+          "title": "视频组装",
+          "desc": "视频工程师",
+          "icon": "🛠️"
+        },
+        {
+          "year": "06",
+          "title": "分发适配",
+          "desc": "分发助手",
+          "icon": "📤"
+        },
+        {
+          "year": "07",
+          "title": "资源归档",
+          "desc": "归档",
+          "icon": "📦"
         }
-      ],
-      "background": "grid"
+      ]
     },
     {
       "id": "scene-4b",
       "source": "",
+      "in_seconds": 310.167,
+      "out_seconds": 333.933,
       "type": "concept_scene",
-      "in_seconds": 41.933,
-      "out_seconds": 45.167,
-      "eyebrow": "翻车现场",
-      "title": "SSR 渲染的致命陷阱",
+      "eyebrow": "三件套",
+      "title": "角色 × 工作流 × 状态机",
+      "background": "gradient",
       "items": [
         {
-          "label": "ERROR",
-          "title": "window is not defined",
-          "desc": "Node 端无 DOM 环境，立即崩溃",
-          "icon": "💥"
+          "label": "ROLE",
+          "title": "角色 = system_prompt",
+          "desc": "思考视角与边界（shared/roles/）",
+          "icon": "🎭"
         },
         {
-          "label": "ROOT CAUSE",
-          "title": "Puppeteer 预渲染阶段",
-          "desc": "Remotion SSR 截图时组件崩溃",
-          "icon": "🔍"
+          "label": "WORKFLOW",
+          "title": "工作流 = user_prompt",
+          "desc": "每阶段标准步骤（.windsurf/workflows/01→07）",
+          "icon": "📋"
         },
         {
-          "label": "IMPACT",
-          "title": "编译流程中断",
-          "desc": "npx remotion render 红屏阻断",
-          "icon": "🚫"
+          "label": "STATE",
+          "title": "frontmatter = 状态机",
+          "desc": "文件即数据的唯一进度真相源（stage/status + PIPELINE.md）",
+          "icon": "🔄"
         }
-      ],
-      "background": "gradient"
+      ]
     },
     {
       "id": "scene-4c",
       "source": "",
-      "type": "text_card",
-      "in_seconds": 45.167,
-      "out_seconds": 51.033,
-      "text": "把这三件套摆出来，一个最小编排器就能驱动整条线......"
+      "in_seconds": 333.933,
+      "out_seconds": 357.833,
+      "type": "terminal_scene",
+      "terminalTitle": "python-frontmatter 最小编排器",
+      "prompt": "$",
+      "steps": [
+        {
+          "kind": "out",
+          "text": "import frontmatter, glob"
+        },
+        {
+          "kind": "out",
+          "text": ""
+        },
+        {
+          "kind": "out",
+          "text": "for path in glob.glob(\"content-library/**/README.md\", recursive=True):"
+        },
+        {
+          "kind": "out",
+          "text": "    post = frontmatter.load(path)"
+        },
+        {
+          "kind": "out",
+          "text": "    if post.get(\"status\") == \"approved\":"
+        },
+        {
+          "kind": "out",
+          "text": "        stage = post[\"stage\"]"
+        },
+        {
+          "kind": "out",
+          "text": "        role  = load_role(stage)       # 角色 = system_prompt"
+        },
+        {
+          "kind": "out",
+          "text": "        steps = load_workflow(stage)   # 工作流 = user_prompt"
+        },
+        {
+          "kind": "out",
+          "text": "        run_agent(system=role, user=steps)"
+        }
+      ]
     },
     {
       "id": "scene-4d",
       "source": "",
-      "type": "table_scene",
-      "in_seconds": 51.033,
-      "out_seconds": 54.167,
-      "eyebrow": "被动约束",
-      "title": "MDC Rules 规则降维打击",
-      "headers": [
-        "评估维度",
-        "❌ 无规则约束",
-        "✅ 加载 MDC Rules"
-      ],
-      "rows": [
+      "in_seconds": 357.833,
+      "out_seconds": 398.9,
+      "type": "concept_scene",
+      "eyebrow": "多模态物理限制",
+      "title": "A 轨 vs B 轨 + 提示词链",
+      "background": "gradient",
+      "items": [
         {
-          "feature": "开发心智",
-          "cursor": "人盯代码，容易遗忘",
-          "windsurf": "规则自动把关，无感守卫",
-          "win": "windsurf"
+          "label": "A 轨",
+          "title": "可全自动",
+          "desc": "概念动画由 Remotion 组件渲染，AI 端到端生成数据+套模板，无需人工干预",
+          "icon": "🅰️"
         },
         {
-          "feature": "AI 自愈率",
-          "cursor": "4-5 轮循环报错崩溃",
-          "windsurf": "一次性直接编译通过",
-          "win": "windsurf"
+          "label": "B 轨",
+          "title": "须真人录屏",
+          "desc": "真实 IDE 录屏，TAD-01 强制真人录制，设计「挂起等待」机制",
+          "icon": "🅱️"
         },
         {
-          "feature": "长期收益",
-          "cursor": "无沉淀，无法复用",
-          "windsurf": "形成技术资产，多项目共享",
-          "win": "windsurf"
+          "label": "PROMPT",
+          "title": "可复现提示词链",
+          "desc": "Prompt-1：基于 @ComparisonCard 生成对比数据；Prompt-2：为 .cursor/rules/ 编写 MDC 规则约束",
+          "icon": "⛓️"
         }
-      ],
-      "background": "gradient"
+      ]
     },
     {
       "id": "scene-5a",
       "source": "",
-      "type": "table_scene",
-      "in_seconds": 54.167,
-      "out_seconds": 60.033,
-      "eyebrow": "被动约束",
-      "title": "MDC Rules 规则降维打击",
-      "headers": [
-        "评估维度",
-        "❌ 无规则约束",
-        "✅ 加载 MDC Rules"
-      ],
-      "rows": [
+      "in_seconds": 398.9,
+      "out_seconds": 433.067,
+      "type": "terminal_scene",
+      "terminalTitle": "✅ 只传数据，复用 @ComparisonCard（A 轨兜底）",
+      "prompt": "$",
+      "steps": [
         {
-          "feature": "开发心智",
-          "cursor": "人盯代码，容易遗忘",
-          "windsurf": "规则自动把关，无感守卫",
-          "win": "windsurf"
+          "kind": "out",
+          "text": "// ✅ 正确示例：数据与模板分离"
         },
         {
-          "feature": "AI 自愈率",
-          "cursor": "4-5 轮循环报错崩溃",
-          "windsurf": "一次性直接编译通过",
-          "win": "windsurf"
+          "kind": "out",
+          "text": "const comparison = {"
         },
         {
-          "feature": "长期收益",
-          "cursor": "无沉淀，无法复用",
-          "windsurf": "形成技术资产，多项目共享",
-          "win": "windsurf"
+          "kind": "out",
+          "text": "  left:  { title: 'MoviePy',  points: ['纯 Python', '简单拼接'],     status: 'error' },"
+        },
+        {
+          "kind": "out",
+          "text": "  right: { title: 'Remotion', points: ['TS 类型安全', '模板复用'], status: 'success' },"
+        },
+        {
+          "kind": "out",
+          "text": "};"
+        },
+        {
+          "kind": "out",
+          "text": "// <ComparisonCard {...comparison} />  —— 下一期只换数据"
         }
-      ],
-      "background": "gradient"
+      ]
     },
     {
       "id": "scene-5b",
       "source": "",
-      "type": "table_scene",
-      "in_seconds": 60.033,
-      "out_seconds": 62.567,
-      "eyebrow": "被动约束",
-      "title": "MDC Rules 规则降维打击",
-      "headers": [
-        "评估维度",
-        "❌ 无规则约束",
-        "✅ 加载 MDC Rules"
-      ],
-      "rows": [
+      "in_seconds": 433.067,
+      "out_seconds": 476.0,
+      "type": "terminal_scene",
+      "terminalTitle": "✅ typeof window 守卫 + MDC 规则（A 轨兜底）",
+      "prompt": "$",
+      "steps": [
         {
-          "feature": "开发心智",
-          "cursor": "人盯代码，容易遗忘",
-          "windsurf": "规则自动把关，无感守卫",
-          "win": "windsurf"
+          "kind": "out",
+          "text": "// ✅ 类型安全守卫：SSR 时用默认值"
         },
         {
-          "feature": "AI 自愈率",
-          "cursor": "4-5 轮循环报错崩溃",
-          "windsurf": "一次性直接编译通过",
-          "win": "windsurf"
+          "kind": "out",
+          "text": "const getWidth = () =>"
         },
         {
-          "feature": "长期收益",
-          "cursor": "无沉淀，无法复用",
-          "windsurf": "形成技术资产，多项目共享",
-          "win": "windsurf"
+          "kind": "out",
+          "text": "  typeof window !== 'undefined'"
+        },
+        {
+          "kind": "out",
+          "text": "    ? window.innerWidth"
+        },
+        {
+          "kind": "out",
+          "text": "    : 1920;"
+        },
+        {
+          "kind": "out",
+          "text": ""
+        },
+        {
+          "kind": "out",
+          "text": "// .cursor/rules/remotion-ssr.mdc:"
+        },
+        {
+          "kind": "out",
+          "text": "// \"任何 Remotion 组件不得在顶层读 window/document\""
         }
-      ],
-      "background": "gradient"
+      ]
     },
     {
       "id": "scene-5c",
       "source": "",
+      "in_seconds": 476.0,
+      "out_seconds": 516.267,
       "type": "concept_scene",
-      "in_seconds": 62.567,
-      "out_seconds": 67.233,
-      "eyebrow": "翻车现场",
-      "title": "SSR 渲染的致命陷阱",
+      "eyebrow": "这一步怎么交给 AI 做好",
+      "title": "人把控架构，AI 干活",
+      "background": "gradient",
       "items": [
         {
-          "label": "ERROR",
-          "title": "window is not defined",
-          "desc": "Node 端无 DOM 环境，立即崩溃",
-          "icon": "💥"
+          "label": "DATA",
+          "title": "AI 填数据、套现成组件",
+          "desc": "人给出每段要展示什么，AI 按范式产出 data，复用 @ComparisonCard/charts/ 等",
+          "icon": "📊"
         },
         {
-          "label": "ROOT CAUSE",
-          "title": "Puppeteer 预渲染阶段",
-          "desc": "Remotion SSR 截图时组件崩溃",
-          "icon": "🔍"
+          "label": "RULE",
+          "title": "用规则替 AI 兜底边界",
+          "desc": "SSR 守卫写进 .cursor/rules/remotion-ssr.mdc，AI 生成组件时自动带",
+          "icon": "🛡️"
         },
         {
-          "label": "IMPACT",
-          "title": "编译流程中断",
-          "desc": "npx remotion render 红屏阻断",
-          "icon": "🚫"
+          "label": "RUN",
+          "title": "渲染命令交给 AI/脚本代跑",
+          "desc": "npx remotion render — 纯命令行，可 CI，人只看产物",
+          "icon": "▶️"
         }
-      ],
-      "background": "gradient"
+      ]
     },
     {
       "id": "scene-6",
       "source": "",
+      "in_seconds": 516.267,
+      "out_seconds": 548.733,
       "type": "outro_scene",
-      "in_seconds": 67.233,
-      "out_seconds": 75.267,
-      "headline": "掌握代码即视频，后期效率提升百倍",
-      "cta": "关注 · 一起验证 AI IDE 的真实能力",
+      "headline": "代码即视频 + 流程即代码 = 把内容生产做成可维护的工程流水线",
+      "cta": "关注 · 下期解密 Whisper 毫秒级字幕与卡点",
       "background": "gradient"
     }
   ],
-  "overlays": [
-    {
-      "type": "provider_chip",
-      "in_seconds": 1.0,
-      "out_seconds": 74.267,
-      "providers": [
-        "remotion",
-        "react",
-        "whisperx"
-      ]
-    }
-  ],
+  "overlays": [],
   "captions": [
     {
-      "word": "用",
+      "word": "用PR、AE一帧帧剪视频？停。",
       "startMs": 0,
-      "endMs": 240
+      "endMs": 2419
     },
     {
-      "word": "PR、",
-      "startMs": 240,
-      "endMs": 370
+      "word": "你有没有想过，写代码就是在写视频？",
+      "startMs": 2419,
+      "endMs": 4280
     },
     {
-      "word": "AE",
-      "startMs": 670,
-      "endMs": 800
+      "word": "一段声明式的代码加一份数据，",
+      "startMs": 4639,
+      "endMs": 7280
     },
     {
-      "word": "一",
-      "startMs": 800,
-      "endMs": 1040
+      "word": "交给渲染器编译成帧，直接合成高清MP4。",
+      "startMs": 7280,
+      "endMs": 9259
     },
     {
-      "word": "帧",
-      "startMs": 1040,
-      "endMs": 1280
+      "word": "这不是科幻，这叫Video-a",
+      "startMs": 9259,
+      "endMs": 11900
     },
     {
-      "word": "帧",
-      "startMs": 1280,
-      "endMs": 1520
+      "word": "s-Code。今天这期我把这套",
+      "startMs": 11900,
+      "endMs": 14060
     },
     {
-      "word": "剪",
-      "startMs": 1520,
-      "endMs": 1760
+      "word": "范式讲透——它不止Remotion，",
+      "startMs": 14060,
+      "endMs": 16739
     },
     {
-      "word": "视",
-      "startMs": 1760,
-      "endMs": 2000
+      "word": "它是一类思路，至少六条路线。",
+      "startMs": 16739,
+      "endMs": 20079
     },
     {
-      "word": "频？",
-      "startMs": 2000,
-      "endMs": 2240
+      "word": "选哪条、为什么选、怎么避坑、",
+      "startMs": 20079,
+      "endMs": 22879
     },
     {
-      "word": "停。",
-      "startMs": 3540,
-      "endMs": 3780
+      "word": "怎么让AI全程接管，一期全讲清。",
+      "startMs": 22879,
+      "endMs": 25339
     },
     {
-      "word": "你",
-      "startMs": 5080,
-      "endMs": 5320
+      "word": "传统剪辑的心智模型是什么？",
+      "startMs": 25589,
+      "endMs": 27949
     },
     {
-      "word": "有",
-      "startMs": 5320,
-      "endMs": 5560
+      "word": "轨道加绝对时间轴。",
+      "startMs": 27949,
+      "endMs": 29689
     },
     {
-      "word": "没",
-      "startMs": 5560,
-      "endMs": 5800
+      "word": "在时间线上拖素材、",
+      "startMs": 29689,
+      "endMs": 31070
     },
     {
-      "word": "有",
-      "startMs": 5800,
-      "endMs": 6040
+      "word": "对齐音频、手打字幕。",
+      "startMs": 31070,
+      "endMs": 33390
     },
     {
-      "word": "想",
-      "startMs": 6040,
-      "endMs": 6280
+      "word": "对技术教程这种高频更新",
+      "startMs": 33390,
+      "endMs": 36609
     },
     {
-      "word": "过，",
-      "startMs": 6280,
-      "endMs": 6520
+      "word": "的内容来说，这是一场低",
+      "startMs": 36609,
+      "endMs": 39009
     },
     {
-      "word": "写",
-      "startMs": 7120,
-      "endMs": 7360
+      "word": "ROI的体力活——每改",
+      "startMs": 39009,
+      "endMs": 41129
     },
     {
-      "word": "代",
-      "startMs": 7360,
-      "endMs": 7600
+      "word": "一处都得回到时间轴上重摆。",
+      "startMs": 41129,
+      "endMs": 43250
     },
     {
-      "word": "码",
-      "startMs": 7600,
-      "endMs": 7840
+      "word": "Video-as-Co",
+      "startMs": 43250,
+      "endMs": 45129
     },
     {
-      "word": "就",
-      "startMs": 7840,
-      "endMs": 8080
+      "word": "de换了一套模型。",
+      "startMs": 45129,
+      "endMs": 46170
     },
     {
-      "word": "是",
-      "startMs": 8080,
-      "endMs": 8320
+      "word": "视频变成代码和数据，",
+      "startMs": 46170,
+      "endMs": 47129
     },
     {
-      "word": "在",
-      "startMs": 8320,
-      "endMs": 8560
+      "word": "渲染器编译成帧。",
+      "startMs": 47129,
+      "endMs": 48929
     },
     {
-      "word": "写",
-      "startMs": 8560,
-      "endMs": 8800
+      "word": "这带来三个传统剪辑给不",
+      "startMs": 48929,
+      "endMs": 50510
     },
     {
-      "word": "视",
-      "startMs": 8800,
-      "endMs": 9040
+      "word": "了的工程特性。第一，",
+      "startMs": 50510,
+      "endMs": 53989
     },
     {
-      "word": "频？...",
-      "startMs": 9040,
-      "endMs": 9280
+      "word": "可版本控制——代码能diff、",
+      "startMs": 53989,
+      "endMs": 55909
     },
     {
-      "word": "传",
-      "startMs": 9266,
-      "endMs": 9506
+      "word": "能review、",
+      "startMs": 55909,
+      "endMs": 56769
     },
     {
-      "word": "统",
-      "startMs": 9506,
-      "endMs": 9746
+      "word": "能git回滚。第二，",
+      "startMs": 56769,
+      "endMs": 60150
     },
     {
-      "word": "剪",
-      "startMs": 9746,
-      "endMs": 9986
+      "word": "可参数化批量复用——同",
+      "startMs": 60150,
+      "endMs": 61230
     },
     {
-      "word": "辑",
-      "startMs": 9986,
-      "endMs": 10226
+      "word": "一模板换一份数据，",
+      "startMs": 61230,
+      "endMs": 62549
     },
     {
-      "word": "的",
-      "startMs": 10226,
-      "endMs": 10466
+      "word": "几十期结构一致的视频批量产出。",
+      "startMs": 62549,
+      "endMs": 63549
     },
     {
-      "word": "心",
-      "startMs": 10466,
-      "endMs": 10706
+      "word": "第三，AI友好——让A",
+      "startMs": 63549,
+      "endMs": 64750
     },
     {
-      "word": "智",
-      "startMs": 10706,
-      "endMs": 10946
+      "word": "I拖时间轴很难，",
+      "startMs": 64750,
+      "endMs": 66290
     },
     {
-      "word": "模",
-      "startMs": 10946,
-      "endMs": 11186
+      "word": "让AI写代码、改数据、调CSS，这是它最擅长的事。",
+      "startMs": 66290,
+      "endMs": 68269
     },
     {
-      "word": "型",
-      "startMs": 11186,
-      "endMs": 11426
+      "word": "一句话讲本质：帧即状态。",
+      "startMs": 68560,
+      "endMs": 74480
     },
     {
-      "word": "是",
-      "startMs": 11426,
-      "endMs": 11666
+      "word": "Video-as-Code把时间轴变成了代码和数据的函数。",
+      "startMs": 74840,
+      "endMs": 78879
     },
     {
-      "word": "什",
-      "startMs": 11666,
-      "endMs": 11906
+      "word": "给定一个时间点，渲染器算出该时刻画面长什么样。",
+      "startMs": 79140,
+      "endMs": 84840
     },
     {
-      "word": "么？",
-      "startMs": 11906,
-      "endMs": 12146
+      "word": "输入是声明式的代码或数据，经过渲染器编译成帧，帧序列合成视频。整条链路都是代码控",
+      "startMs": 85180,
+      "endMs": 89260
     },
     {
-      "word": "轨",
-      "startMs": 13446,
-      "endMs": 13686
+      "word": "代码即视频不等于Remotion。",
+      "startMs": 89520,
+      "endMs": 91880
     },
     {
-      "word": "道",
-      "startMs": 13686,
-      "endMs": 13926
+      "word": "它是一类范式，实现的工具不止一种。",
+      "startMs": 91880,
+      "endMs": 94700
     },
     {
-      "word": "加",
-      "startMs": 13926,
-      "endMs": 14166
+      "word": "看这张表。第一条路线，",
+      "startMs": 94700,
+      "endMs": 95980
     },
     {
-      "word": "绝",
-      "startMs": 14166,
-      "endMs": 14406
+      "word": "DOM加React渲染，",
+      "startMs": 96400,
+      "endMs": 99540
     },
     {
-      "word": "对",
-      "startMs": 14406,
-      "endMs": 14646
+      "word": "Remotion是代表，",
+      "startMs": 99540,
+      "endMs": 101460
     },
     {
-      "word": "时",
-      "startMs": 14646,
-      "endMs": 14886
+      "word": "React组件加CSS就能做复杂排版。",
+      "startMs": 101460,
+      "endMs": 105020
     },
     {
-      "word": "间",
-      "startMs": 14886,
-      "endMs": 15126
+      "word": "第二条，Motion Canvas，",
+      "startMs": 105020,
+      "endMs": 106540
     },
     {
-      "word": "轴...",
-      "startMs": 15126,
-      "endMs": 15366
+      "word": "TypeScript声明式动画，",
+      "startMs": 106540,
+      "endMs": 109780
     },
     {
-      "word": "一",
-      "startMs": 15366,
-      "endMs": 15606
+      "word": "适合代码演示和时序编排。第三条，",
+      "startMs": 109780,
+      "endMs": 111020
     },
     {
-      "word": "句",
-      "startMs": 15606,
-      "endMs": 15846
+      "word": "Manim，Python写几",
+      "startMs": 111540,
+      "endMs": 112320
     },
     {
-      "word": "话",
-      "startMs": 15846,
-      "endMs": 16086
+      "word": "何和公式动画，数学可视化神器。",
+      "startMs": 112320,
+      "endMs": 113900
     },
     {
-      "word": "讲",
-      "startMs": 16086,
-      "endMs": 16326
+      "word": "第四条，MoviePy，",
+      "startMs": 113900,
+      "endMs": 114580
     },
     {
-      "word": "本",
-      "startMs": 16326,
-      "endMs": 16566
+      "word": "NumPy加FFmpeg，",
+      "startMs": 114580,
+      "endMs": 115420
     },
     {
-      "word": "质",
-      "startMs": 16566,
-      "endMs": 16806
+      "word": "纯Python做简单拼接。",
+      "startMs": 115420,
+      "endMs": 117380
     },
     {
-      "word": "帧",
-      "startMs": 16806,
-      "endMs": 17046
+      "word": "第五条，PixiJS这类游戏引擎，",
+      "startMs": 117380,
+      "endMs": 119860
     },
     {
-      "word": "即",
-      "startMs": 17046,
-      "endMs": 17286
+      "word": "Canvas逐帧绘制做粒子效果。",
+      "startMs": 119860,
+      "endMs": 122380
     },
     {
-      "word": "状",
-      "startMs": 17286,
-      "endMs": 17526
+      "word": "第六条，FFmpeg加脚本，",
+      "startMs": 122380,
+      "endMs": 124140
     },
     {
-      "word": "态...",
-      "startMs": 17526,
-      "endMs": 17766
+      "word": "命令式合成做批量转码。六条路线，",
+      "startMs": 124140,
+      "endMs": 125860
     },
     {
-      "word": "代",
-      "startMs": 17766,
-      "endMs": 18006
+      "word": "内核一样——用代码描述画面、",
+      "startMs": 125860,
+      "endMs": 129220
     },
     {
-      "word": "码",
-      "startMs": 18006,
-      "endMs": 18246
+      "word": "编译成帧、合成视频。",
+      "startMs": 129220,
+      "endMs": 131100
     },
     {
-      "word": "即",
-      "startMs": 18246,
-      "endMs": 18486
+      "word": "区别只在描述层用什么语言、渲染层用什么引擎。",
+      "startMs": 131100,
+      "endMs": 133540
     },
     {
-      "word": "视",
-      "startMs": 18486,
-      "endMs": 18726
+      "word": "范式理解了，接下来要做选择题。",
+      "startMs": 133850,
+      "endMs": 136370
     },
     {
-      "word": "频",
-      "startMs": 18726,
-      "endMs": 18966
+      "word": "判断层不是中立百科式综述，",
+      "startMs": 136370,
+      "endMs": 138310
     },
     {
-      "word": "不",
-      "startMs": 18966,
-      "endMs": 19206
+      "word": "它是边界——每个方案必须",
+      "startMs": 138310,
+      "endMs": 139710
     },
     {
-      "word": "等",
-      "startMs": 19206,
-      "endMs": 19446
+      "word": "回答什么前提下成立，",
+      "startMs": 139710,
+      "endMs": 142370
     },
     {
-      "word": "于",
-      "startMs": 19446,
-      "endMs": 19686
+      "word": "哪步会翻车。看这个矩阵。",
+      "startMs": 142370,
+      "endMs": 144250
     },
     {
-      "word": "Remotion。",
-      "startMs": 19686,
-      "endMs": 19906
+      "word": "Remotion，",
+      "startMs": 144250,
+      "endMs": 145650
     },
     {
-      "word": "它",
-      "startMs": 21206,
-      "endMs": 21446
+      "word": "前端栈复杂排版没问题，",
+      "startMs": 145650,
+      "endMs": 148530
     },
     {
-      "word": "是",
-      "startMs": 21446,
-      "endMs": 21686
+      "word": "跨期模板复用没问题，",
+      "startMs": 148530,
+      "endMs": 151950
     },
     {
-      "word": "一",
-      "startMs": 21686,
-      "endMs": 21926
+      "word": "但零前端基础的项目别碰，",
+      "startMs": 151950,
+      "endMs": 154210
     },
     {
-      "word": "类",
-      "startMs": 21926,
-      "endMs": 22166
+      "word": "而且模块顶层读window会崩、",
+      "startMs": 154210,
+      "endMs": 155930
     },
     {
-      "word": "范",
-      "startMs": 22166,
-      "endMs": 22406
+      "word": "商业用途要BUSL授权。",
+      "startMs": 155930,
+      "endMs": 159310
     },
     {
-      "word": "式...",
-      "startMs": 22406,
-      "endMs": 22646
+      "word": "Motion Canvas，",
+      "startMs": 159310,
+      "endMs": 160510
     },
     {
-      "word": "判",
-      "startMs": 22633,
-      "endMs": 22873
+      "word": "时序动画很强，",
+      "startMs": 160510,
+      "endMs": 163570
     },
     {
-      "word": "断",
-      "startMs": 22873,
-      "endMs": 23113
+      "word": "但网页级Flex排版不如",
+      "startMs": 163570,
+      "endMs": 165050
     },
     {
-      "word": "层",
-      "startMs": 23113,
-      "endMs": 23353
+      "word": "React生态。Manim，",
+      "startMs": 165050,
+      "endMs": 167530
     },
     {
-      "word": "不",
-      "startMs": 23353,
-      "endMs": 23593
+      "word": "数学可视化天花板，",
+      "startMs": 167530,
+      "endMs": 169050
     },
     {
-      "word": "是",
-      "startMs": 23593,
-      "endMs": 23833
+      "word": "但学习曲线陡、排版弱、",
+      "startMs": 169050,
+      "endMs": 170230
     },
     {
-      "word": "中",
-      "startMs": 23833,
-      "endMs": 24073
+      "word": "渲染慢。MoviePy，",
+      "startMs": 170230,
+      "endMs": 172970
     },
     {
-      "word": "立",
-      "startMs": 24073,
-      "endMs": 24313
+      "word": "纯Python简单拼接够用，",
+      "startMs": 172970,
+      "endMs": 174250
     },
     {
-      "word": "百",
-      "startMs": 24313,
-      "endMs": 24553
+      "word": "但复杂文字动效很痛苦。",
+      "startMs": 174250,
+      "endMs": 176930
     },
     {
-      "word": "科",
-      "startMs": 24553,
-      "endMs": 24793
+      "word": "PixiJS做游戏级粒子效果，",
+      "startMs": 176930,
+      "endMs": 177850
     },
     {
-      "word": "式",
-      "startMs": 24793,
-      "endMs": 25033
+      "word": "但文本对齐是灾难。",
+      "startMs": 177850,
+      "endMs": 180030
     },
     {
-      "word": "综",
-      "startMs": 25033,
-      "endMs": 25273
+      "word": "FFmpeg做批量转码和字幕烧录，",
+      "startMs": 180030,
+      "endMs": 181290
     },
     {
-      "word": "述，",
-      "startMs": 25273,
-      "endMs": 25513
+      "word": "但filtergraph",
+      "startMs": 181290,
+      "endMs": 183370
     },
     {
-      "word": "它",
-      "startMs": 26113,
-      "endMs": 26353
+      "word": "语法人类基本看不懂。",
+      "startMs": 183370,
+      "endMs": 185350
     },
     {
-      "word": "是",
-      "startMs": 26353,
-      "endMs": 26593
+      "word": "怎么对号入座？",
+      "startMs": 185350,
+      "endMs": 186370
     },
     {
-      "word": "边",
-      "startMs": 26593,
-      "endMs": 26833
+      "word": "我们这个频道要做的是一期一个模板、",
+      "startMs": 186370,
+      "endMs": 187150
     },
     {
-      "word": "界...",
-      "startMs": 26833,
-      "endMs": 27073
+      "word": "字幕代码卡片高复用的硬核技术视频，",
+      "startMs": 187150,
+      "endMs": 189570
     },
     {
-      "word": "选",
-      "startMs": 27066,
-      "endMs": 27306
+      "word": "所以主线是Remotio",
+      "startMs": 189570,
+      "endMs": 190670
     },
     {
-      "word": "型",
-      "startMs": 27306,
-      "endMs": 27546
+      "word": "n做A轨成片，",
+      "startMs": 190670,
+      "endMs": 192930
     },
     {
-      "word": "不",
-      "startMs": 27546,
-      "endMs": 27786
+      "word": "MoviePy加FFmpeg做B轨拼接闪避。",
+      "startMs": 192930,
+      "endMs": 194010
     },
     {
-      "word": "是",
-      "startMs": 27786,
-      "endMs": 28026
+      "word": "选型不是哪个最火选哪个，要回到核心约束。",
+      "startMs": 194230,
+      "endMs": 196030
     },
     {
-      "word": "哪",
-      "startMs": 28026,
-      "endMs": 28266
+      "word": "我们频道要的是：固定模板加内容批量替换，",
+      "startMs": 196030,
+      "endMs": 198410
     },
     {
-      "word": "个",
-      "startMs": 28266,
-      "endMs": 28506
+      "word": "让AI端到端接管，而且跨期可维护。",
+      "startMs": 198410,
+      "endMs": 201050
     },
     {
-      "word": "最",
-      "startMs": 28506,
-      "endMs": 28746
+      "word": "在这个约束下，Remotion胜",
+      "startMs": 201050,
+      "endMs": 203810
     },
     {
-      "word": "火",
-      "startMs": 28746,
-      "endMs": 28986
+      "word": "出有四个硬理由。第一，",
+      "startMs": 203810,
+      "endMs": 205770
     },
     {
-      "word": "选",
-      "startMs": 28986,
-      "endMs": 29226
+      "word": "也是决定性的——数据驱动模板，",
+      "startMs": 205770,
+      "endMs": 209250
     },
     {
-      "word": "哪",
-      "startMs": 29226,
-      "endMs": 29466
+      "word": "类型安全跨期复用。",
+      "startMs": 209250,
+      "endMs": 213250
     },
     {
-      "word": "个，",
-      "startMs": 29466,
-      "endMs": 29706
+      "word": "Remotion的data.ts",
+      "startMs": 213250,
+      "endMs": 215070
     },
     {
-      "word": "要",
-      "startMs": 30306,
-      "endMs": 30546
+      "word": "到Episode到template四层结 构，",
+      "startMs": 215070,
+      "endMs": 218010
     },
     {
-      "word": "回",
-      "startMs": 30546,
-      "endMs": 30786
+      "word": "天生适合模板与数据分离。",
+      "startMs": 218010,
+      "endMs": 221170
     },
     {
-      "word": "到",
-      "startMs": 30786,
-      "endMs": 31026
+      "word": "TypeScript保证每期换数",
+      "startMs": 221170,
+      "endMs": 222610
     },
     {
-      "word": "核",
-      "startMs": 31026,
-      "endMs": 31266
+      "word": "据时格式不出错。第二，AI友好，",
+      "startMs": 222610,
+      "endMs": 225330
     },
     {
-      "word": "心",
-      "startMs": 31266,
-      "endMs": 31506
+      "word": "每期只让AI填数据和微调CSS，",
+      "startMs": 225330,
+      "endMs": 226390
     },
     {
-      "word": "约",
-      "startMs": 31506,
-      "endMs": 31746
+      "word": "幻觉空间最小。第三，CLI原生，",
+      "startMs": 226390,
+      "endMs": 229110
     },
     {
-      "word": "束...",
-      "startMs": 31746,
-      "endMs": 31986
+      "word": "npx remotion ren",
+      "startMs": 229110,
+      "endMs": 230430
     },
     {
-      "word": "一",
-      "startMs": 32000,
-      "endMs": 32240
+      "word": "der一行命令就能出片。第四，",
+      "startMs": 230430,
+      "endMs": 232690
     },
     {
-      "word": "个",
-      "startMs": 32240,
-      "endMs": 32480
+      "word": "网页生态红利，CSS、SVG、",
+      "startMs": 232690,
+      "endMs": 234010
     },
     {
-      "word": "对",
-      "startMs": 32480,
-      "endMs": 32720
+      "word": "Flexbox、所有前端动效库随手可用。",
+      "startMs": 234010,
+      "endMs": 235630
     },
     {
-      "word": "照",
-      "startMs": 32720,
-      "endMs": 32960
+      "word": "一个对照就能看清区别。",
+      "startMs": 235850,
+      "endMs": 237710
     },
     {
-      "word": "就",
-      "startMs": 32960,
-      "endMs": 33200
+      "word": "左边Remotion，",
+      "startMs": 237710,
+      "endMs": 241350
     },
     {
-      "word": "能",
-      "startMs": 33200,
-      "endMs": 33440
+      "word": "TypeScript约束，",
+      "startMs": 241350,
+      "endMs": 243850
     },
     {
-      "word": "看",
-      "startMs": 33440,
-      "endMs": 33680
+      "word": "跨期类型安全，AI只填数据不碰结构，",
+      "startMs": 243850,
+      "endMs": 245690
     },
     {
-      "word": "清",
-      "startMs": 33680,
-      "endMs": 33920
+      "word": "改一处主题全期生效。",
+      "startMs": 245690,
+      "endMs": 246830
     },
     {
-      "word": "区",
-      "startMs": 33920,
-      "endMs": 34160
+      "word": "右边HyperFrames，",
+      "startMs": 246830,
+      "endMs": 249150
     },
     {
-      "word": "别...",
-      "startMs": 34160,
-      "endMs": 34400
+      "word": "HTML无类型检查，",
+      "startMs": 249150,
+      "endMs": 250630
     },
     {
-      "word": "代",
-      "startMs": 34400,
-      "endMs": 34640
+      "word": "直接写HTML结构容易漂移，",
+      "startMs": 250630,
+      "endMs": 252010
     },
     {
-      "word": "价",
-      "startMs": 34640,
-      "endMs": 34880
+      "word": "十期以后维护是灾难。",
+      "startMs": 252010,
+      "endMs": 253870
     },
     {
-      "word": "也",
-      "startMs": 34880,
-      "endMs": 35120
+      "word": "授权上HyperFrames是Apache更宽松，但在模板复用加AI接管这个维度",
+      "startMs": 253870,
+      "endMs": 256610
     },
     {
-      "word": "如",
-      "startMs": 35120,
-      "endMs": 35360
+      "word": "代价也如实交代。第一，",
+      "startMs": 256890,
+      "endMs": 258410
     },
     {
-      "word": "实",
-      "startMs": 35360,
-      "endMs": 35600
+      "word": "Remotion基于",
+      "startMs": 258410,
+      "endMs": 260190
     },
     {
-      "word": "交",
-      "startMs": 35600,
-      "endMs": 35840
+      "word": "React技术栈——",
+      "startMs": 260190,
+      "endMs": 261730
     },
     {
-      "word": "代...",
-      "startMs": 35840,
-      "endMs": 36080
+      "word": "但不用担心，",
+      "startMs": 261730,
+      "endMs": 263370
     },
     {
-      "word": "视",
-      "startMs": 36066,
-      "endMs": 36306
+      "word": "本项目就是让AI来写",
+      "startMs": 263370,
+      "endMs": 264990
     },
     {
-      "word": "频",
-      "startMs": 36306,
-      "endMs": 36546
+      "word": "组件和填数据，",
+      "startMs": 264990,
+      "endMs": 266330
     },
     {
-      "word": "的",
-      "startMs": 36546,
-      "endMs": 36786
+      "word": "人把控架构就行，",
+      "startMs": 266330,
+      "endMs": 267650
     },
     {
-      "word": "画",
-      "startMs": 36786,
-      "endMs": 37026
+      "word": "前端基础不是门槛。",
+      "startMs": 267650,
+      "endMs": 269730
     },
     {
-      "word": "面",
-      "startMs": 37026,
-      "endMs": 37266
+      "word": "第二，BUSL商业授权，",
+      "startMs": 269730,
+      "endMs": 271010
     },
     {
-      "word": "能",
-      "startMs": 37266,
-      "endMs": 37506
+      "word": "规模化商用需要付费，",
+      "startMs": 271010,
+      "endMs": 272890
     },
     {
-      "word": "用",
-      "startMs": 37506,
-      "endMs": 37746
+      "word": "我们当前规模没影响。",
+      "startMs": 272890,
+      "endMs": 274950
     },
     {
-      "word": "代",
-      "startMs": 37746,
-      "endMs": 37986
+      "word": "第三，SSR环境约束，",
+      "startMs": 274950,
+      "endMs": 276670
     },
     {
-      "word": "码",
-      "startMs": 37986,
-      "endMs": 38226
+      "word": "Node端求值时读w",
+      "startMs": 276670,
+      "endMs": 278130
     },
     {
-      "word": "控",
-      "startMs": 38226,
-      "endMs": 38466
+      "word": "indow会崩。",
+      "startMs": 278130,
+      "endMs": 281850
     },
     {
-      "word": "制，",
-      "startMs": 38466,
-      "endMs": 38706
+      "word": "这个坑怎么解？",
+      "startMs": 281850,
+      "endMs": 283270
     },
     {
-      "word": "那",
-      "startMs": 39306,
-      "endMs": 39546
+      "word": "后面第五段详细讲，一条MDC规则就能让AI自动规避，一次性封死。",
+      "startMs": 283270,
+      "endMs": 284470
     },
     {
-      "word": "制",
-      "startMs": 39546,
-      "endMs": 39786
+      "word": "视频的画面能用代码控制，",
+      "startMs": 284740,
+      "endMs": 286880
     },
     {
-      "word": "作",
-      "startMs": 39786,
-      "endMs": 40026
+      "word": "那制作视频的工作流本身，",
+      "startMs": 286880,
+      "endMs": 289480
     },
     {
-      "word": "视",
-      "startMs": 40026,
-      "endMs": 40266
+      "word": "能不能也做成代码？",
+      "startMs": 289480,
+      "endMs": 291020
     },
     {
-      "word": "频",
-      "startMs": 40266,
-      "endMs": 40506
+      "word": "我们的答案是——能。",
+      "startMs": 291020,
+      "endMs": 292460
     },
     {
-      "word": "的",
-      "startMs": 40506,
-      "endMs": 40746
+      "word": "这才是频道真正的护城河。",
+      "startMs": 292460,
+      "endMs": 294860
     },
     {
-      "word": "工",
-      "startMs": 40746,
-      "endMs": 40986
+      "word": "看这条线。01选题分析，",
+      "startMs": 294860,
+      "endMs": 295940
     },
     {
-      "word": "作",
-      "startMs": 40986,
-      "endMs": 41226
+      "word": "02内容策划，03视听编排，",
+      "startMs": 295940,
+      "endMs": 299420
     },
     {
-      "word": "流",
-      "startMs": 41226,
-      "endMs": 41466
+      "word": "04脚本撰写，05视频组装，",
+      "startMs": 299420,
+      "endMs": 301600
     },
     {
-      "word": "本",
-      "startMs": 41466,
-      "endMs": 41706
+      "word": "06分发适配，07资源归档。",
+      "startMs": 301600,
+      "endMs": 303260
     },
     {
-      "word": "身...",
-      "startMs": 41706,
-      "endMs": 41946
+      "word": "七个阶段，每个阶段都有对",
+      "startMs": 303260,
+      "endMs": 305300
     },
     {
-      "word": "怎",
-      "startMs": 41933,
-      "endMs": 42173
+      "word": "应的角色定义和工作流文件，",
+      "startMs": 305300,
+      "endMs": 308220
     },
     {
-      "word": "么",
-      "startMs": 42173,
-      "endMs": 42413
+      "word": "真实存在于我们的仓库里。",
+      "startMs": 308220,
+      "endMs": 311540
     },
     {
-      "word": "做",
-      "startMs": 42413,
-      "endMs": 42653
+      "word": "这就是流程即代码——Pr",
+      "startMs": 311540,
+      "endMs": 312780
     },
     {
-      "word": "到",
-      "startMs": 42653,
-      "endMs": 42893
+      "word": "ocess-as-Code。",
+      "startMs": 312780,
+      "endMs": 315020
     },
     {
-      "word": "的？",
-      "startMs": 42893,
-      "endMs": 43133
+      "word": "怎么做到的？三件套。角色等于systemprompt——定义每个岗位的视角、能",
+      "startMs": 315330,
+      "endMs": 317330
     },
     {
-      "word": "三",
-      "startMs": 44433,
-      "endMs": 44673
+      "word": "把这三件套摆出来，一个最小编排器就能驱动整条线。",
+      "startMs": 339640,
+      "endMs": 342400
     },
     {
-      "word": "件",
-      "startMs": 44673,
-      "endMs": 44913
+      "word": "看这段Python伪代码。",
+      "startMs": 342400,
+      "endMs": 344000
     },
     {
-      "word": "套...",
-      "startMs": 44913,
-      "endMs": 45153
+      "word": "扫描所有产物的frontmatter，",
+      "startMs": 344000,
+      "endMs": 345760
     },
     {
-      "word": "把",
-      "startMs": 45166,
-      "endMs": 45406
+      "word": "找到status是approved的阶段 ，",
+      "startMs": 345760,
+      "endMs": 347380
     },
     {
-      "word": "这",
-      "startMs": 45406,
-      "endMs": 45646
+      "word": "读取对应的角色文件作为system prompt，",
+      "startMs": 347380,
+      "endMs": 349620
     },
     {
-      "word": "三",
-      "startMs": 45646,
-      "endMs": 45886
+      "word": "读取工作流作为user prompt，",
+      "startMs": 349620,
+      "endMs": 352560
     },
     {
-      "word": "件",
-      "startMs": 45886,
-      "endMs": 46126
+      "word": "喂给LLM，自动推进下一阶段。",
+      "startMs": 352560,
+      "endMs": 355060
     },
     {
-      "word": "套",
-      "startMs": 46126,
-      "endMs": 46366
+      "word": "python-frontmatter这个 库真实存在，",
+      "startMs": 355060,
+      "endMs": 356420
     },
     {
-      "word": "摆",
-      "startMs": 46366,
-      "endMs": 46606
+      "word": "这段代码不是PPT——虽然目前还是p",
+      "startMs": 356420,
+      "endMs": 359480
     },
     {
-      "word": "出",
-      "startMs": 46606,
-      "endMs": 46846
+      "word": "aper spec，",
+      "startMs": 359480,
+      "endMs": 361120
     },
     {
-      "word": "来，",
-      "startMs": 46846,
-      "endMs": 47086
+      "word": "但架构已经跑通了。",
+      "startMs": 361120,
+      "endMs": 363620
     },
     {
-      "word": "一",
-      "startMs": 47686,
-      "endMs": 47926
+      "word": "真正的难点是多模态物理限制。",
+      "startMs": 363780,
+      "endMs": 366340
     },
     {
-      "word": "个",
-      "startMs": 47926,
-      "endMs": 48166
+      "word": "A轨——概念动画——可以全自动，",
+      "startMs": 366340,
+      "endMs": 370220
     },
     {
-      "word": "最",
-      "startMs": 48166,
-      "endMs": 48406
+      "word": "AI生成数据，Remotion组件渲染，",
+      "startMs": 370220,
+      "endMs": 371600
     },
     {
-      "word": "小",
-      "startMs": 48406,
-      "endMs": 48646
+      "word": "不用人碰。B轨——真实IDE录屏—",
+      "startMs": 371600,
+      "endMs": 373100
     },
     {
-      "word": "编",
-      "startMs": 48646,
-      "endMs": 48886
+      "word": "—我们有个规矩叫TAD-01，",
+      "startMs": 373100,
+      "endMs": 374660
     },
     {
-      "word": "排",
-      "startMs": 48886,
-      "endMs": 49126
+      "word": "强制真人录制，禁止AIGC伪界面。",
+      "startMs": 374660,
+      "endMs": 377800
     },
     {
-      "word": "器",
-      "startMs": 49126,
-      "endMs": 49366
+      "word": "所以流程里要设计挂起等待机制，",
+      "startMs": 377800,
+      "endMs": 378400
     },
     {
-      "word": "就",
-      "startMs": 49366,
-      "endMs": 49606
+      "word": "B轨没到位就先挂着。正因为流程是代码，",
+      "startMs": 378400,
+      "endMs": 381480
     },
     {
-      "word": "能",
-      "startMs": 49606,
-      "endMs": 49846
+      "word": "本期录屏要真实跑通的也是一段可复现的提示词链。",
+      "startMs": 381480,
+      "endMs": 383040
     },
     {
-      "word": "驱",
-      "startMs": 49846,
-      "endMs": 50086
+      "word": "Prompt第一条：基于remot",
+      "startMs": 383040,
+      "endMs": 385400
     },
     {
-      "word": "动",
-      "startMs": 50086,
-      "endMs": 50326
+      "word": "ion-composer现有的Co",
+      "startMs": 385400,
+      "endMs": 388880
     },
     {
-      "word": "整",
-      "startMs": 50326,
-      "endMs": 50566
+      "word": "mparisonCard组件，",
+      "startMs": 388880,
+      "endMs": 389780
     },
     {
-      "word": "条",
-      "startMs": 50566,
-      "endMs": 50806
+      "word": "生成对比卡片的数据配置，只产出数据，",
+      "startMs": 389780,
+      "endMs": 393640
     },
     {
-      "word": "线...",
-      "startMs": 50806,
-      "endMs": 51046
+      "word": "不要新建组件。Prompt第二条：",
+      "startMs": 393640,
+      "endMs": 397560
     },
     {
-      "word": "真",
-      "startMs": 51033,
-      "endMs": 51273
+      "word": "为Cursor在.cursor/r",
+      "startMs": 397560,
+      "endMs": 400140
     },
     {
-      "word": "正",
-      "startMs": 51273,
-      "endMs": 51513
+      "word": "ules下编写一份MDC规则，",
+      "startMs": 400140,
+      "endMs": 400920
     },
     {
-      "word": "的",
-      "startMs": 51513,
-      "endMs": 51753
+      "word": "约束Remotion组件自动加上window的安全守卫。",
+      "startMs": 400920,
+      "endMs": 404720
     },
     {
-      "word": "难",
-      "startMs": 51753,
-      "endMs": 51993
+      "word": "到了实操。第一个原则——首选数据驱动现成组件，",
+      "startMs": 404980,
+      "endMs": 405720
     },
     {
-      "word": "点",
-      "startMs": 51993,
-      "endMs": 52233
+      "word": "不要从零手写。看左边，反面示例，",
+      "startMs": 405720,
+      "endMs": 409759
     },
     {
-      "word": "是",
-      "startMs": 52233,
-      "endMs": 52473
+      "word": "为这一期从零写一个Comparis",
+      "startMs": 409759,
+      "endMs": 410860
     },
     {
-      "word": "多",
-      "startMs": 52473,
-      "endMs": 52713
+      "word": "onScene.tsx，手写布局、",
+      "startMs": 410860,
+      "endMs": 416860
     },
     {
-      "word": "模",
-      "startMs": 52713,
-      "endMs": 52953
+      "word": "手写样式、手写动画。",
+      "startMs": 416860,
+      "endMs": 419960
     },
     {
-      "word": "态",
-      "startMs": 52953,
-      "endMs": 53193
+      "word": "这违反了固定模板加内容替换的原则，",
+      "startMs": 419960,
+      "endMs": 421900
     },
     {
-      "word": "物",
-      "startMs": 53193,
-      "endMs": 53433
+      "word": "而且完全忽略了仓库里现成的Comp",
+      "startMs": 421900,
+      "endMs": 423840
     },
     {
-      "word": "理",
-      "startMs": 53433,
-      "endMs": 53673
+      "word": "arisonCard组件。看右边，",
+      "startMs": 423840,
+      "endMs": 425879
     },
     {
-      "word": "限",
-      "startMs": 53673,
-      "endMs": 53913
+      "word": "正确做法。你只产出一个data对象",
+      "startMs": 425879,
+      "endMs": 427439
     },
     {
-      "word": "制...",
-      "startMs": 53913,
-      "endMs": 54153
+      "word": "——left方案、right方案，",
+      "startMs": 427439,
+      "endMs": 429780
     },
     {
-      "word": "到",
-      "startMs": 54166,
-      "endMs": 54406
+      "word": "各自的title、points、",
+      "startMs": 429780,
+      "endMs": 431780
     },
     {
-      "word": "了",
-      "startMs": 54406,
-      "endMs": 54646
+      "word": "status——然后丢给Compa",
+      "startMs": 431780,
+      "endMs": 433640
     },
     {
-      "word": "实",
-      "startMs": 54646,
-      "endMs": 54886
+      "word": "risonCard渲染。数据和模板分离，",
+      "startMs": 433640,
+      "endMs": 435259
     },
     {
-      "word": "操。",
-      "startMs": 54886,
-      "endMs": 55126
+      "word": "下一期只换数据就行。这才是数据驱动模板的正确用法。",
+      "startMs": 435259,
+      "endMs": 438200
     },
     {
-      "word": "第",
-      "startMs": 56426,
-      "endMs": 56666
+      "word": "第二个避坑点——SSR环境约束。",
+      "startMs": 438430,
+      "endMs": 441310
     },
     {
-      "word": "一",
-      "startMs": 56666,
-      "endMs": 56906
+      "word": "Remotion渲染分两个阶段。第一阶段，",
+      "startMs": 441310,
+      "endMs": 443129
     },
     {
-      "word": "个",
-      "startMs": 56906,
-      "endMs": 57146
+      "word": "Node端打包并求值Composition列表，",
+      "startMs": 443129,
+      "endMs": 444970
     },
     {
-      "word": "原",
-      "startMs": 57146,
-      "endMs": 57386
+      "word": "这一步拿时长、拿尺寸、做任务拆分。",
+      "startMs": 444970,
+      "endMs": 449449
     },
     {
-      "word": "则",
-      "startMs": 57386,
-      "endMs": 57626
+      "word": "第二阶段，无头Chrome逐帧截图再合成。",
+      "startMs": 449449,
+      "endMs": 452709
     },
     {
-      "word": "首",
-      "startMs": 57626,
-      "endMs": 57866
+      "word": "崩溃点在第一步——你的代码在模块顶层读",
+      "startMs": 452709,
+      "endMs": 454970
     },
     {
-      "word": "选",
-      "startMs": 57866,
-      "endMs": 58106
+      "word": "了window.innerWidth，",
+      "startMs": 454970,
+      "endMs": 457649
     },
     {
-      "word": "数",
-      "startMs": 58106,
-      "endMs": 58346
+      "word": "Node环境没有window对象，",
+      "startMs": 457649,
+      "endMs": 459530
     },
     {
-      "word": "据",
-      "startMs": 58346,
-      "endMs": 58586
+      "word": "直接报ReferenceError。",
+      "startMs": 459530,
+      "endMs": 461509
     },
     {
-      "word": "驱",
-      "startMs": 58586,
-      "endMs": 58826
+      "word": "这不是逐帧SSR的问题，",
+      "startMs": 461509,
+      "endMs": 463829
     },
     {
-      "word": "动",
-      "startMs": 58826,
-      "endMs": 59066
+      "word": "这是模块求值阶段的问题——知道区别，",
+      "startMs": 463829,
+      "endMs": 466490
     },
     {
-      "word": "现",
-      "startMs": 59066,
-      "endMs": 59306
+      "word": "你才知道往哪查bug。怎么修？",
+      "startMs": 466490,
+      "endMs": 468730
     },
     {
-      "word": "成",
-      "startMs": 59306,
-      "endMs": 59546
+      "word": "加typeof window守卫。",
+      "startMs": 468730,
+      "endMs": 471389
     },
     {
-      "word": "组",
-      "startMs": 59546,
-      "endMs": 59786
+      "word": "然后把这条写进.cursor/rule",
+      "startMs": 471389,
+      "endMs": 473910
     },
     {
-      "word": "件...",
-      "startMs": 59786,
-      "endMs": 60026
+      "word": "s/remotion-ssr.mdc文件 ，",
+      "startMs": 473910,
+      "endMs": 475790
     },
     {
-      "word": "第",
-      "startMs": 60033,
-      "endMs": 60273
+      "word": "globs指向remotion-com",
+      "startMs": 475790,
+      "endMs": 478210
     },
     {
-      "word": "二",
-      "startMs": 60273,
-      "endMs": 60513
+      "word": "poser的src目录，以后AI生成组件就自动带守卫。一次性把这个约束封死，不用",
+      "startMs": 478210,
+      "endMs": 481250
     },
     {
-      "word": "个",
-      "startMs": 60513,
-      "endMs": 60753
+      "word": "到了最后一步——产出数据、套组件、",
+      "startMs": 481480,
+      "endMs": 484640
     },
     {
-      "word": "避",
-      "startMs": 60753,
-      "endMs": 60993
+      "word": "渲染出片。这一步人不用逐行写代码。",
+      "startMs": 484640,
+      "endMs": 486740
     },
     {
-      "word": "坑",
-      "startMs": 60993,
-      "endMs": 61233
+      "word": "把活拆成AI能稳定接手的形状。",
+      "startMs": 486740,
+      "endMs": 490040
     },
     {
-      "word": "点",
-      "startMs": 61233,
-      "endMs": 61473
+      "word": "第一步，让AI填数据和套现成组件。",
+      "startMs": 490040,
+      "endMs": 493060
     },
     {
-      "word": "SSR",
-      "startMs": 61473,
-      "endMs": 61618
+      "word": "人给出每段要对比什么要展示什么，",
+      "startMs": 493060,
+      "endMs": 495040
     },
     {
-      "word": "环",
-      "startMs": 61618,
-      "endMs": 61858
+      "word": "AI按数据驱动范式产出data，",
+      "startMs": 495040,
+      "endMs": 497020
     },
     {
-      "word": "境",
-      "startMs": 61858,
-      "endMs": 62098
+      "word": "复用ComparisonCard、",
+      "startMs": 497020,
+      "endMs": 498280
     },
     {
-      "word": "约",
-      "startMs": 62098,
-      "endMs": 62338
+      "word": "charts等组件，不从零造轮子。",
+      "startMs": 498280,
+      "endMs": 501360
     },
     {
-      "word": "束...",
-      "startMs": 62338,
-      "endMs": 62578
+      "word": "第二步，用规则替AI兜底边界。",
+      "startMs": 501360,
+      "endMs": 504220
     },
     {
-      "word": "到",
-      "startMs": 62566,
-      "endMs": 62806
+      "word": "SSR守卫写进MDC规则，",
+      "startMs": 504220,
+      "endMs": 505660
     },
     {
-      "word": "了",
-      "startMs": 62806,
-      "endMs": 63046
+      "word": "AI生成组件时自动带。第三步，",
+      "startMs": 505660,
+      "endMs": 507600
     },
     {
-      "word": "最",
-      "startMs": 63046,
-      "endMs": 63286
+      "word": "渲染命令交给AI或脚本代跑。",
+      "startMs": 507600,
+      "endMs": 508600
     },
     {
-      "word": "后",
-      "startMs": 63286,
-      "endMs": 63526
+      "word": "cd到remotion-com",
+      "startMs": 508600,
+      "endMs": 509780
     },
     {
-      "word": "一",
-      "startMs": 63526,
-      "endMs": 63766
+      "word": "poser目录，npx rem",
+      "startMs": 509780,
+      "endMs": 511939
     },
     {
-      "word": "步",
-      "startMs": 63766,
-      "endMs": 64006
+      "word": "otion studio可视化调试，",
+      "startMs": 511939,
+      "endMs": 513500
     },
     {
-      "word": "产",
-      "startMs": 64006,
-      "endMs": 64246
+      "word": "npx remotion re",
+      "startMs": 513500,
+      "endMs": 515399
     },
     {
-      "word": "出",
-      "startMs": 64246,
-      "endMs": 64486
+      "word": "nder直接出片。纯命令行，",
+      "startMs": 515399,
+      "endMs": 517820
     },
     {
-      "word": "数",
-      "startMs": 64486,
-      "endMs": 64726
+      "word": "可以上CI，人只看产物。",
+      "startMs": 517820,
+      "endMs": 520879
     },
     {
-      "word": "据、",
-      "startMs": 64726,
-      "endMs": 64966
+      "word": "代码即视频加流程即代码，把内容生产从手工活变成可维护的工程流水线。",
+      "startMs": 521070,
+      "endMs": 527450
     },
     {
-      "word": "套",
-      "startMs": 65266,
-      "endMs": 65506
+      "word": "代码即视频的范式，Remotion只是其中一条路线，",
+      "startMs": 527450,
+      "endMs": 531530
     },
     {
-      "word": "组",
-      "startMs": 65506,
-      "endMs": 65746
+      "word": "但它在数据驱动和AI接管这个维度上目前最优。",
+      "startMs": 531530,
+      "endMs": 535190
     },
     {
-      "word": "件、",
-      "startMs": 65746,
-      "endMs": 65986
+      "word": "而流程即代码——角色等于prompt、工作流等于步骤、",
+      "startMs": 535190,
+      "endMs": 539970
     },
     {
-      "word": "渲",
-      "startMs": 66286,
-      "endMs": 66526
+      "word": "frontmatter等于状态机——这套自家流水线本",
+      "startMs": 539970,
+      "endMs": 543830
     },
     {
-      "word": "染",
-      "startMs": 66526,
-      "endMs": 66766
+      "word": "身就是最好的Dogfooding证据。开源仓库在简介，",
+      "startMs": 543830,
+      "endMs": 546050
     },
     {
-      "word": "出",
-      "startMs": 66766,
-      "endMs": 67006
+      "word": "自取。下期，我们攻克字幕与卡点——Whisper毫秒",
+      "startMs": 546050,
+      "endMs": 551150
     },
     {
-      "word": "片...",
-      "startMs": 67006,
-      "endMs": 67246
-    },
-    {
-      "word": "代",
-      "startMs": 67233,
-      "endMs": 67473
-    },
-    {
-      "word": "码",
-      "startMs": 67473,
-      "endMs": 67713
-    },
-    {
-      "word": "即",
-      "startMs": 67713,
-      "endMs": 67953
-    },
-    {
-      "word": "视",
-      "startMs": 67953,
-      "endMs": 68193
-    },
-    {
-      "word": "频",
-      "startMs": 68193,
-      "endMs": 68433
-    },
-    {
-      "word": "加",
-      "startMs": 68433,
-      "endMs": 68673
-    },
-    {
-      "word": "流",
-      "startMs": 68673,
-      "endMs": 68913
-    },
-    {
-      "word": "程",
-      "startMs": 68913,
-      "endMs": 69153
-    },
-    {
-      "word": "即",
-      "startMs": 69153,
-      "endMs": 69393
-    },
-    {
-      "word": "代",
-      "startMs": 69393,
-      "endMs": 69633
-    },
-    {
-      "word": "码，",
-      "startMs": 69633,
-      "endMs": 69873
-    },
-    {
-      "word": "把",
-      "startMs": 70473,
-      "endMs": 70713
-    },
-    {
-      "word": "内",
-      "startMs": 70713,
-      "endMs": 70953
-    },
-    {
-      "word": "容",
-      "startMs": 70953,
-      "endMs": 71193
-    },
-    {
-      "word": "生",
-      "startMs": 71193,
-      "endMs": 71433
-    },
-    {
-      "word": "产",
-      "startMs": 71433,
-      "endMs": 71673
-    },
-    {
-      "word": "从",
-      "startMs": 71673,
-      "endMs": 71913
-    },
-    {
-      "word": "手",
-      "startMs": 71913,
-      "endMs": 72153
-    },
-    {
-      "word": "工",
-      "startMs": 72153,
-      "endMs": 72393
-    },
-    {
-      "word": "活",
-      "startMs": 72393,
-      "endMs": 72633
-    },
-    {
-      "word": "变",
-      "startMs": 72633,
-      "endMs": 72873
-    },
-    {
-      "word": "成",
-      "startMs": 72873,
-      "endMs": 73113
-    },
-    {
-      "word": "可",
-      "startMs": 73113,
-      "endMs": 73353
-    },
-    {
-      "word": "维",
-      "startMs": 73353,
-      "endMs": 73593
-    },
-    {
-      "word": "护",
-      "startMs": 73593,
-      "endMs": 73833
-    },
-    {
-      "word": "的",
-      "startMs": 73833,
-      "endMs": 74073
-    },
-    {
-      "word": "工",
-      "startMs": 74073,
-      "endMs": 74313
-    },
-    {
-      "word": "程",
-      "startMs": 74313,
-      "endMs": 74553
-    },
-    {
-      "word": "流",
-      "startMs": 74553,
-      "endMs": 74793
-    },
-    {
-      "word": "水",
-      "startMs": 74793,
-      "endMs": 75033
-    },
-    {
-      "word": "线...",
-      "startMs": 75033,
-      "endMs": 75273
+      "word": "级时间戳怎么自动驱动弹跳字幕。关注，别错过。",
+      "startMs": 551150,
+      "endMs": 553630
     }
   ]
 }

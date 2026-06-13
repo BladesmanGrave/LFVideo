@@ -10,12 +10,12 @@ upstream_inputs:
 
 > 状态：**suspended（挂起）** —— 本期采用 **A 轨兜底**：04 脚本中所有标注 `[B 轨]` 的录屏镜头都给出了对应的 `[A 轨兜底]` Remotion 画面（`@TerminalScene` + 代码 Props），因此 B 轨录屏暂不录制，整片由 Remotion 全自动渲染。
 >
-> 本文件是流水线 `05` 槽位（职责 = B 轨录屏素材，workflow `/05-b-roll-recording`）的**唯一**正确产物。历史上曾有一份越权的「视频组装」草稿误占本槽位（旧 `05-assembly/README.md`，已删除）；视频组装的唯一阶段是 `07-assembly`，不在 05。
+> 本文件（`05-b-roll/README.md`）是流水线 `05` 槽位（职责 = B 轨录屏素材，workflow `/05-b-roll-recording`）的**唯一**正确产物。历史上曾有一份越权的「视频组装」草稿误占本槽位（旧 `05-assembly/`，已删除）；视频组装的唯一阶段是 `07-assembly`，不在 05。
 
 ## 文件约定
 
-- 本阶段文档名为 `05-b-roll.md`，与所在文件夹 `05-assembly/` 同级（沿用历史文件夹名，文档职责以 frontmatter 的 `stage: 05-b-roll-recording` 为准，`pipeline_lint.py` 已支持识别该命名）。
-- 若后续补录真实素材，放到 `05-assembly/assets/<clip_id>.mp4`，并把本阶段 `status` 改为 `approved`；`07-assembly` 会用录屏替换对应的 A 轨兜底镜头。
+- 本阶段文档为 `05-b-roll/README.md`（标准约定）。
+- 若后续补录真实素材，放到 `05-b-roll/assets/<clip_id>.mp4`，并把本阶段 `status` 改为 `approved`；`07-assembly` 会用录屏替换对应的 A 轨兜底镜头。
 
 ## 需要的 B 轨镜头（逐条映射 04 `b_track_assets_required`，禁改写）
 
@@ -56,7 +56,7 @@ upstream_inputs:
   "status": "suspended",
   "reason": "A-track fallback covers every [B 轨] shot; no screen recording required this episode",
   "fallback_track": "A",
-  "assets_dir": "05-assembly/assets/",
+  "assets_dir": "05-b-roll/assets/",
   "assets_present": false,
   "b_track_assets_required": [
     {"clip_id": "b-ide-data-driven", "consumed_by_section": "5a", "fallback": "@TerminalScene"},

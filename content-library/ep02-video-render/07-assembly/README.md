@@ -4,14 +4,14 @@ status: approved
 source_workflow: /07-video-assembly
 upstream_inputs:
   - 04-script/README.md (status: approved)
-  - 05-assembly/05-b-roll.md (status: suspended — A轨兜底)
+  - 05-b-roll/README.md (status: suspended — A轨兜底)
   - 06-tts/assets/ (status: approved)
   - shared/docs/remotion-spec.md
 ---
 
 # ep02 视频组装方案
 
-> **唯一真源 = 04 脚本（approved）。** 本组装方案逐条映射 04 契约块的 16 段 `sections[]`（禁止增删/合并/改写/重排），B 轨三镜逐条来自 `05-assembly/05-b-roll.md`；本期 B 轨 `suspended`，全部以 A 轨兜底。
+> **唯一真源 = 04 脚本（approved）。** 本组装方案逐条映射 04 契约块的 16 段 `sections[]`（禁止增删/合并/改写/重排），B 轨三镜逐条来自 `05-b-roll/README.md`；本期 B 轨 `suspended`，全部以 A 轨兜底。
 
 ## 制作概要
 
@@ -355,7 +355,7 @@ npx remotion render --composition=ep02-video-render-vertical --output=out/ep02-v
 
 ## 需人工提供的素材（B 轨）
 
-> 来源 = `05-assembly/05-b-roll.md`（阶段 `05-b-roll-recording`，当前 `suspended`）。以下三镜逐条对应 04 `b_track_assets_required`，本期均以 A 轨兜底；补录后把 05 改回 `approved` 即可替换：
+> 来源 = `05-b-roll/README.md`（阶段 `05-b-roll-recording`，当前 `suspended`）。以下三镜逐条对应 04 `b_track_assets_required`，本期均以 A 轨兜底；补录后把 05 改回 `approved` 即可替换：
 
 | 素材 ID | 消费段落 | 描述 | A 轨兜底方案 |
 |---------|------|------|------------|
