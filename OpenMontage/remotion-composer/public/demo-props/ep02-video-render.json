@@ -1719,5 +1719,9 @@
       "startMs": 551150,
       "endMs": 553630
     }
-  ]
+  ],
+  "avatar": {
+    "enabled": true,
+    "widthFraction": 0.3
+  }
 }

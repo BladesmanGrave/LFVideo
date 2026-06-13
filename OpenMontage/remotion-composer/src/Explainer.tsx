@@ -36,6 +36,7 @@ import { PieChart } from "./components/charts/PieChart";
 import { KPIGrid } from "./components/charts/KPIGrid";
 import { ProgressBar } from "./components/ProgressBar";
 import { CaptionOverlay, WordCaption } from "./components/CaptionOverlay";
+import { VRMAvatar } from "./components/VRMAvatar";
 import { SectionTitle } from "./components/SectionTitle";
 import { StatReveal } from "./components/StatReveal";
 import { HeroTitle } from "./components/HeroTitle";
@@ -317,12 +318,20 @@ interface AudioConfig {
   };
 }
 
+interface AvatarConfig {
+  /** Show the VRM digital host (right-side half-body PiP). */
+  enabled?: boolean;
+  /** Panel width as a fraction of the composition width (default 0.3). */
+  widthFraction?: number;
+}
+
 export interface ExplainerProps {
   [key: string]: unknown;
   cuts: Cut[];
   overlays?: Overlay[];
   captions?: WordCaption[];
   audio?: AudioConfig;
+  avatar?: AvatarConfig;
 }
 
 // ---------------------------------------------------------------------------
@@ -885,7 +894,7 @@ const OverlayRenderer: React.FC<{ overlay: Overlay }> = ({ overlay }) => {
 // ---------------------------------------------------------------------------
 
 export const Explainer: React.FC<ExplainerProps> = (props) => {
-  const { cuts, overlays, captions, audio } = props;
+  const { cuts, overlays, captions, audio, avatar } = props;
   const { fps, durationInFrames } = useVideoConfig();
 
   // Resolve theme from props — playbook name, theme name, or custom themeConfig
@@ -921,6 +930,11 @@ export const Explainer: React.FC<ExplainerProps> = (props) => {
           </Sequence>
         );
       })}
+
+      {/* Layer 2.5: Digital host (VRM half-body PiP, right side) */}
+      {avatar?.enabled && (
+        <VRMAvatar captions={captions} widthFraction={avatar.widthFraction} />
+      )}
 
       {/* Layer 3: Captions (word-by-word highlight) */}
       {captions && captions.length > 0 && (

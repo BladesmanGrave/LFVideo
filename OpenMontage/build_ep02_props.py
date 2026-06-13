@@ -372,6 +372,8 @@ def main() -> int:
     parser.add_argument("--with-audio", action="store_true",
                         help="concat narration wav into public/ and add audio block "
                              "(wav is git-ignored; for full local renders)")
+    parser.add_argument("--no-avatar", action="store_true",
+                        help="omit the VRM digital host (right-side half-body PiP)")
     args = parser.parse_args()
 
     durations = load_segment_durations()
@@ -384,6 +386,11 @@ def main() -> int:
         "overlays": [],
         "captions": captions,
     }
+
+    if not args.no_avatar:
+        # VRM digital host driven by the caption word-timeline (mouth) + auto
+        # blink / breathing. Asset: public/avatars/host-avatar.vrm.
+        payload["avatar"] = {"enabled": True, "widthFraction": 0.3}
 
     if args.with_audio:
         build_narration_wav(durations)

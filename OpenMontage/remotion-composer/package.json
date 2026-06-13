@@ -8,18 +8,23 @@
     "upgrade": "npx remotion upgrade"
   },
   "dependencies": {
+    "@pixiv/three-vrm": "^3.5.3",
+    "@react-three/fiber": "^9.6.1",
     "@remotion/captions": "^4.0.470",
     "@remotion/cli": "^4.0.470",
     "@remotion/google-fonts": "^4.0.470",
     "@remotion/media": "^4.0.470",
     "@remotion/player": "^4.0.470",
+    "@remotion/three": "^4.0.475",
     "@remotion/transitions": "^4.0.470",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
-    "remotion": "^4.0.470"
+    "remotion": "^4.0.470",
+    "three": "^0.170.0"
   },
   "devDependencies": {
     "@types/react": "^19.2.15",
+    "@types/three": "^0.170.0",
     "typescript": "^6.0.3"
   }
 }
