@@ -16,8 +16,15 @@ export interface WordCaption {
 
 interface CaptionOverlayProps {
   words: WordCaption[];
-  // How many words to show at once in a "page"
+  // Hard cap on words per page (Latin scripts); CJK is governed by chars.
   wordsPerPage?: number;
+  // Max characters per page before forcing a break (Latin / CJK).
+  maxCharsLatin?: number;
+  maxCharsCjk?: number;
+  // Silence gap (ms) between words that triggers a natural break.
+  pauseThresholdMs?: number;
+  // Max on-screen duration (ms) for a single page.
+  maxDurationMs?: number;
   fontSize?: number;
   color?: string;
   highlightColor?: string;
@@ -31,17 +38,74 @@ interface CaptionPage {
   endMs: number;
 }
 
-function buildPages(words: WordCaption[], wordsPerPage: number): CaptionPage[] {
+// Punctuation that ends a sentence (strong break) / clause (soft break).
+// Kept in sync with tools/subtitle/subtitle_gen.py so the burned-in captions
+// segment identically to the generated SRT/VTT files.
+const SENTENCE_END = new Set([".", "!", "?", "…", "。", "！", "？"]);
+const CLAUSE_END = new Set([",", ";", ":", "，", "、", "；", "："]);
+
+function isCJKText(text: string): boolean {
+  const glyphs = [...text].filter((c) => !/\s/.test(c));
+  if (glyphs.length === 0) return false;
+  const cjk = glyphs.filter((c) => /[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\uac00-\ud7a3]/.test(c)).length;
+  return cjk / glyphs.length >= 0.3;
+}
+
+interface PageBreakOptions {
+  wordsPerPage: number;
+  maxCharsLatin: number;
+  maxCharsCjk: number;
+  pauseThresholdMs: number;
+  maxDurationMs: number;
+  maxLines: number;
+}
+
+function buildPages(words: WordCaption[], opts: PageBreakOptions): CaptionPage[] {
+  if (words.length === 0) return [];
+  const cjk = isCJKText(words.map((w) => w.word).join(""));
+  const join = (items: WordCaption[]) =>
+    cjk
+      ? items.map((w) => w.word.trim()).join("")
+      : items.map((w) => w.word.trim()).join(" ");
+  const charLimit = (cjk ? opts.maxCharsCjk : opts.maxCharsLatin) * Math.max(opts.maxLines, 1);
+
   const pages: CaptionPage[] = [];
-  for (let i = 0; i < words.length; i += wordsPerPage) {
-    const pageWords = words.slice(i, i + wordsPerPage);
-    if (pageWords.length === 0) continue;
+  let buf: WordCaption[] = [];
+  const flush = () => {
+    if (buf.length === 0) return;
     pages.push({
-      words: pageWords,
-      startMs: pageWords[0].startMs,
-      endMs: pageWords[pageWords.length - 1].endMs,
+      words: buf,
+      startMs: buf[0].startMs,
+      endMs: buf[buf.length - 1].endMs,
     });
+    buf = [];
+  };
+
+  for (let i = 0; i < words.length; i++) {
+    const w = words[i];
+    const wtext = w.word.trim();
+
+    if (buf.length > 0) {
+      const overWords = !cjk && buf.length >= opts.wordsPerPage;
+      const overChars = join([...buf, w]).length > charLimit;
+      const overTime = w.endMs - buf[0].startMs > opts.maxDurationMs;
+      if (overWords || overChars || overTime) flush();
+    }
+
+    buf.push(w);
+    if (i === words.length - 1) break;
+
+    const trailing = wtext.slice(-1);
+    const gap = words[i + 1].startMs - w.endMs;
+    if (SENTENCE_END.has(trailing)) {
+      flush();
+    } else if (gap >= opts.pauseThresholdMs && buf.length >= 2) {
+      flush();
+    } else if (CLAUSE_END.has(trailing) && join(buf).length >= charLimit * 0.6) {
+      flush();
+    }
   }
+  flush();
   return pages;
 }
 
@@ -57,6 +121,9 @@ const PageRenderer: React.FC<{
   const { fps } = useVideoConfig();
 
   const currentMs = page.startMs + (frame / fps) * 1000;
+  // CJK scripts are written without spaces between glyphs.
+  const cjk = isCJKText(page.words.map((w) => w.word).join(""));
+  const wordSep = cjk ? "" : " ";
 
   // Spring entrance
   const entrance = spring({
@@ -107,7 +174,7 @@ const PageRenderer: React.FC<{
                     : "0 2px 4px rgba(0,0,0,0.5)",
                 }}
               >
-                {w.word}{i < page.words.length - 1 ? " " : ""}
+                {w.word}{i < page.words.length - 1 ? wordSep : ""}
               </span>
             );
           })}
@@ -120,6 +187,10 @@ const PageRenderer: React.FC<{
 export const CaptionOverlay: React.FC<CaptionOverlayProps> = ({
   words,
   wordsPerPage = 6,
+  maxCharsLatin = 42,
+  maxCharsCjk = 20,
+  pauseThresholdMs = 500,
+  maxDurationMs = 6000,
   fontSize = 42,
   color = "#F8FAFC",
   highlightColor = "#22D3EE",
@@ -127,7 +198,14 @@ export const CaptionOverlay: React.FC<CaptionOverlayProps> = ({
   fontFamily = "Space Grotesk, Inter, system-ui, sans-serif",
 }) => {
   const { fps } = useVideoConfig();
-  const pages = buildPages(words, wordsPerPage);
+  const pages = buildPages(words, {
+    wordsPerPage,
+    maxCharsLatin,
+    maxCharsCjk,
+    pauseThresholdMs,
+    maxDurationMs,
+    maxLines: 2,
+  });
 
   return (
     <AbsoluteFill>

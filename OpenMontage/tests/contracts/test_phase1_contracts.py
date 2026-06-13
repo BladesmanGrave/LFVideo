@@ -259,6 +259,116 @@ class TestSubtitleGenUnit:
         Path(result.artifacts[0]).unlink(missing_ok=True)
 
 
+# ---- Contract: SubtitleGen segments at natural linguistic boundaries ----
+
+class TestSubtitleSegmentation:
+    @staticmethod
+    def _cues(segments, **opts):
+        tool = SubtitleGen()
+        out = Path("test_seg.caption.json")
+        result = tool.execute({
+            "segments": segments,
+            "format": "json",
+            "output_path": str(out),
+            **opts,
+        })
+        assert result.success
+        data = json.loads(out.read_text(encoding="utf-8"))
+        out.unlink(missing_ok=True)
+        return data["cues"]
+
+    @staticmethod
+    def _seg(words, start=None, end=None):
+        return {
+            "text": " ".join(w["word"] for w in words),
+            "start": start if start is not None else words[0]["start"],
+            "end": end if end is not None else words[-1]["end"],
+            "words": words,
+        }
+
+    def test_breaks_on_sentence_punctuation(self):
+        words = [
+            {"word": "This", "start": 0.0, "end": 0.3},
+            {"word": "is", "start": 0.4, "end": 0.5},
+            {"word": "a", "start": 0.6, "end": 0.7},
+            {"word": "test.", "start": 0.8, "end": 1.2},
+            {"word": "Now", "start": 1.3, "end": 1.6},
+            {"word": "we", "start": 1.7, "end": 1.9},
+            {"word": "continue", "start": 2.0, "end": 2.6},
+        ]
+        cues = self._cues([self._seg(words)])
+        # The sentence-ending period forces a cue boundary.
+        assert len(cues) == 2
+        assert cues[0]["text"].rstrip().endswith(".")
+        assert cues[0]["text"].replace("\n", " ") == "This is a test."
+
+    def test_breaks_on_pause(self):
+        # A 1.1s silence between "beta" and "gamma" should split the cue and
+        # must NOT be merged back together by the min-duration pass.
+        words = [
+            {"word": "alpha", "start": 0.0, "end": 0.4},
+            {"word": "beta", "start": 0.5, "end": 0.9},
+            {"word": "gamma", "start": 2.0, "end": 2.4},
+            {"word": "delta", "start": 2.5, "end": 2.9},
+        ]
+        cues = self._cues([self._seg(words)])
+        assert len(cues) == 2
+        assert cues[0]["text"].replace("\n", " ") == "alpha beta"
+        assert cues[1]["text"].replace("\n", " ") == "gamma delta"
+
+    def test_cjk_not_chunked_by_word_count(self):
+        # 24 single-character CJK "words", no punctuation. The naive
+        # max_words=8 rule would chop this into 3-char-ish fragments; the
+        # character budget should instead keep it as one cue (<= 40 chars).
+        text = "中文字幕不应该每八个字就被硬生生地切断开来真的很奇怪"[:24]
+        words = []
+        t = 0.0
+        for ch in text:
+            words.append({"word": ch, "start": round(t, 3), "end": round(t + 0.18, 3)})
+            t += 0.2
+        cues = self._cues([self._seg(words, start=0.0, end=t)])
+        assert len(cues) == 1
+        assert len(cues[0]["words"]) == len(text)  # not chopped every 8 chars
+        for line in cues[0]["lines"]:
+            assert len(line) <= 20
+
+    def test_latin_wraps_into_balanced_lines(self):
+        # Six 8-char words: one cue (<= 8 words) but > 42 chars, so it must
+        # wrap onto two lines, each within the per-line limit.
+        words = [
+            {"word": "abcdefgh", "start": i * 0.4, "end": i * 0.4 + 0.35}
+            for i in range(6)
+        ]
+        cues = self._cues([self._seg(words)])
+        assert len(cues) == 1
+        assert len(cues[0]["lines"]) <= 2
+        for line in cues[0]["lines"]:
+            assert len(line) <= 42
+
+    def test_preserves_punctuation(self):
+        words = [
+            {"word": "Wait,", "start": 0.0, "end": 0.5},
+            {"word": "really?", "start": 0.6, "end": 1.4},
+        ]
+        cues = self._cues([self._seg(words)])
+        joined = " ".join(c["text"] for c in cues)
+        assert "," in joined and "?" in joined
+
+    def test_lines_respect_per_line_limit(self):
+        # Long realistic-ish segment: every produced line must stay within the
+        # configured per-line character budget.
+        words = [
+            {"word": f"word{i}", "start": i * 0.5, "end": i * 0.5 + 0.45}
+            for i in range(30)
+        ]
+        cues = self._cues([self._seg(words)], max_chars_per_line=30, max_words_per_cue=8)
+        assert len(cues) > 1
+        for cue in cues:
+            assert len(cue["lines"]) <= 2
+            for line in cue["lines"]:
+                assert len(line) <= 30
+
+
 # ---- Contract: missing input file returns error, not crash ----
 
 class TestPhase1ErrorHandling:
