@@ -17,6 +17,7 @@
     "@remotion/player": "^4.0.470",
     "@remotion/three": "^4.0.475",
     "@remotion/transitions": "^4.0.470",
+    "pinyin-pro": "^3.28.1",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "remotion": "^4.0.470",

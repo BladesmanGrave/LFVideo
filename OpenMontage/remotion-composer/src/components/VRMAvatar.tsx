@@ -18,6 +18,7 @@ import {
   VRMExpressionPresetName,
   VRMHumanBoneName,
 } from "@pixiv/three-vrm";
+import { pinyin } from "pinyin-pro";
 import type { WordCaption } from "./CaptionOverlay";
 
 // ---------------------------------------------------------------------------
@@ -26,6 +27,8 @@ import type { WordCaption } from "./CaptionOverlay";
 // We do not read the waveform; instead the existing Whisper word-level captions
 // ({ word, startMs, endMs }) drive the mouth so it is 100% frame-deterministic
 // and stays in sync with the same data that drives the on-screen subtitles.
+// Each character is mapped to a viseme via its Mandarin pinyin final (韵母),
+// so the mouth shape approximates the actual vowel being spoken.
 
 const VISEMES: VRMExpressionPresetName[] = [
   VRMExpressionPresetName.Aa,
@@ -34,12 +37,61 @@ const VISEMES: VRMExpressionPresetName[] = [
   VRMExpressionPresetName.Ee,
   VRMExpressionPresetName.Oh,
 ];
+const AA = 0;
+const IH = 1;
+const OU = 2;
+const EE = 3;
+const OH = 4;
 
-// Pick a viseme deterministically from a character's code point so different
-// syllables produce visibly different mouth shapes without a pinyin dependency.
+// Map a toneless Mandarin final (韵母) to a viseme by its dominant vowel shape.
+function visemeFromFinal(final: string): number {
+  const f = final.toLowerCase();
+  if (f === "ou" || f === "iou" || f === "iu") return OU;
+  if (f.includes("a")) return AA;
+  if (f.includes("o")) return OH;
+  if (f.includes("u")) return OU;
+  if (f.includes("e")) return EE;
+  if (f.includes("i") || f.includes("v") || f.includes("\u00fc")) return IH;
+  return AA;
+}
+
+const LATIN_VOWEL_VISEME: Record<string, number> = {
+  a: AA,
+  e: EE,
+  i: IH,
+  o: OH,
+  u: OU,
+};
+
+// Peak jaw opening per viseme — open vowels (a) gape, rounded/closed ones (i/u)
+// barely part the lips, so different finals look visibly different.
+const VISEME_OPEN: number[] = [0.95, 0.5, 0.6, 0.72, 0.85];
+
+// Cache char→viseme so the pinyin lookup runs once per unique character.
+const visemeCache = new Map<string, number>();
+
+// Map a character to a viseme: Han characters go through pinyin→final→vowel,
+// Latin vowels map directly, everything else keeps the mouth at the open rest.
 function visemeIndexForChar(ch: string): number {
+  const cached = visemeCache.get(ch);
+  if (cached !== undefined) return cached;
+
   const code = ch.codePointAt(0) ?? 0;
-  return code % VISEMES.length;
+  let viseme = AA;
+  if (code >= 0x4e00 && code <= 0x9fff) {
+    const finals = pinyin(ch, {
+      pattern: "final",
+      toneType: "none",
+      type: "array",
+    });
+    viseme = visemeFromFinal(finals[0] ?? "");
+  } else {
+    const lower = ch.toLowerCase();
+    if (lower in LATIN_VOWEL_VISEME) viseme = LATIN_VOWEL_VISEME[lower];
+  }
+
+  visemeCache.set(ch, viseme);
+  return viseme;
 }
 
 interface MouthState {
@@ -68,9 +120,9 @@ function mouthStateAt(
   const within = (local - charIndex * charDur) / charDur; // 0..1 inside char
 
   // Smooth open/close bump per character → looks like articulating syllables.
-  const open = Math.sin(Math.PI * within) * 0.85;
-  const viseme = VISEMES[visemeIndexForChar(chars[charIndex])];
-  return { viseme, open: Math.max(0, open) };
+  const vi = visemeIndexForChar(chars[charIndex]);
+  const open = Math.sin(Math.PI * within) * VISEME_OPEN[vi];
+  return { viseme: VISEMES[vi], open: Math.max(0, open) };
 }
 
 // ---------------------------------------------------------------------------
