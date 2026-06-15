@@ -58,7 +58,7 @@ const TableCell: React.FC<{
 				alignItems: 'center',
 				justifyContent: align === 'center' ? 'center' : 'flex-start',
 				background: isHeader 
-					? 'rgba(15, 23, 42, 0.7)' 
+					? 'rgba(40, 26, 44, 0.7)' 
 					: isWinner && highlightActive
 						? `${winColor}10` 
 						: 'transparent',
@@ -137,7 +137,7 @@ export const TableScene: React.FC<Props> = ({
 					style={{
 						display: 'flex',
 						flexDirection: 'column',
-						background: 'rgba(15, 23, 42, 0.3)',
+						background: 'rgba(40, 26, 44, 0.3)',
 						borderRadius: RADIUS.lg,
 						border: '1.5px solid rgba(255, 255, 255, 0.08)',
 						backdropFilter: 'blur(16px)',
@@ -150,7 +150,7 @@ export const TableScene: React.FC<Props> = ({
 					<div
 						style={{
 							display: 'flex',
-							background: 'rgba(15, 23, 42, 0.8)',
+							background: 'rgba(40, 26, 44, 0.8)',
 							borderBottom: '2px solid rgba(255, 255, 255, 0.15)',
 							opacity: headerOpacity,
 							transform: `scaleY(${headerScaleY})`,

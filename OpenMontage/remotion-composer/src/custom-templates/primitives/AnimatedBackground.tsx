@@ -22,7 +22,7 @@ const MeshGradientBg: React.FC = () => {
 	const y3 = Math.cos(frame * 0.006) * 150 + 540;
 
 	return (
-		<AbsoluteFill style={{backgroundColor: 'rgba(3, 7, 18, 0.65)', overflow: 'hidden'}}>
+		<AbsoluteFill style={{backgroundColor: 'rgba(26, 16, 28, 0.6)', overflow: 'hidden'}}>
 			{/* Inject Keyframe Styles */}
 			<style>{`
 				@keyframes drift-slow {
@@ -107,7 +107,7 @@ const GridBg: React.FC = () => {
 					top: 0,
 					width: '150px',
 					height: '100%',
-					background: `linear-gradient(90deg, transparent, rgba(79, 156, 249, 0.08), transparent)`,
+					background: `linear-gradient(90deg, transparent, rgba(255, 179, 71, 0.08), transparent)`,
 					pointerEvents: 'none',
 				}}
 			/>
@@ -129,7 +129,7 @@ const PARTICLES = Array.from({length: 32}, (_, i) => ({
 const ParticlesBg: React.FC = () => {
 	const frame = useCurrentFrame();
 	return (
-		<AbsoluteFill style={{backgroundColor: 'rgba(2, 6, 23, 0.75)', overflow: 'hidden'}}>
+		<AbsoluteFill style={{backgroundColor: 'rgba(22, 13, 24, 0.7)', overflow: 'hidden'}}>
 			{/* Drift particles based on trigonometric waves */}
 			{PARTICLES.map((p, i) => {
 				const time = frame * p.driftSpeed;

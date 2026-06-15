@@ -58,7 +58,7 @@ const ItemCard: React.FC<{
 				display: 'flex',
 				alignItems: 'flex-start',
 				gap: SPACING.md,
-				background: 'rgba(15, 23, 42, 0.45)', // Sleek deep glass slate
+				background: 'rgba(40, 26, 44, 0.45)', // warm deep glass
 				border: `1.5px solid ${color}22`,
 				borderRadius: RADIUS.lg,
 				padding: `${SPACING.md + 4}px ${SPACING.lg}px`,

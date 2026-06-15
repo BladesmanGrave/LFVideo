@@ -15,17 +15,17 @@ export const FONT_SIZE = {
 // ---- 颜色 ----
 export const COLORS = {
 	bg: {
-		from: '#0F172A',
-		to: '#1E293B',
+		from: '#1A1320',
+		to: '#2E2233',
 	},
 	text: {
-		primary: '#F8FAFC',
-		secondary: '#94A3B8',
-		muted: '#64748B',
+		primary: '#F3E9DA',
+		secondary: '#C9B5A0',
+		muted: '#9C8A78',
 	},
-	accent: ['#4F9CF9', '#A78BFA', '#34D399', '#FBBF24'] as const,
-	line: 'rgba(255,255,255,0.08)',
-	surface: 'rgba(255,255,255,0.04)',
+	accent: ['#FFB347', '#FF7EB6', '#7FD8C0', '#C9A6E8'] as const,
+	line: 'rgba(255,232,205,0.10)',
+	surface: 'rgba(255,232,205,0.05)',
 } as const;
 
 // ---- 间距 ----

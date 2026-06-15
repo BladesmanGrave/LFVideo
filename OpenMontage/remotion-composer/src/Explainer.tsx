@@ -952,6 +952,27 @@ export const Explainer: React.FC<ExplainerProps> = (props) => {
         />
       )}
 
+      {/* Layer 2.9: global warm color-grade + vignette — fuses the 3D host and
+          the flat UI into one graded image. Sits above scenes + host, below
+          captions so subtitles stay crisp. */}
+      <AbsoluteFill
+        style={{
+          pointerEvents: "none",
+          zIndex: 55,
+          background:
+            "linear-gradient(180deg, rgba(255,180,120,0.06) 0%, rgba(150,90,170,0.07) 100%)",
+          mixBlendMode: "soft-light",
+        }}
+      />
+      <AbsoluteFill
+        style={{
+          pointerEvents: "none",
+          zIndex: 56,
+          background:
+            "radial-gradient(ellipse 78% 72% at 50% 42%, transparent 55%, rgba(15,8,18,0.5) 100%)",
+        }}
+      />
+
       {/* Layer 3: Captions (word-by-word highlight) */}
       {captions && captions.length > 0 && (
         <CaptionOverlay
