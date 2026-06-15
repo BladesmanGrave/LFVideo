@@ -267,12 +267,12 @@ const VRMModel: React.FC<VRMModelProps> = ({
       // bend inward until they lie horizontally across the surface, and the hands
       // settle flat (palms down). A faint breath keeps the shoulders alive.
       const br = breath * 0.012;
-      if (lUpper) lUpper.rotation.set(0.35 + br, 0.12, -1.18);
-      if (rUpper) rUpper.rotation.set(0.35 + br, -0.12, 1.18);
-      if (lLower) lLower.rotation.set(0.25, 1.15, 0);
-      if (rLower) rLower.rotation.set(0.25, -1.15, 0);
-      if (lHand) lHand.rotation.set(0.3, 0, 0);
-      if (rHand) rHand.rotation.set(0.3, 0, 0);
+      if (lUpper) lUpper.rotation.set(0 + br, 0, -1.32);
+      if (rUpper) rUpper.rotation.set(0 + br, 0, 1.32);
+      if (lLower) lLower.rotation.set(-1.15, 0, -0.55);
+      if (rLower) rLower.rotation.set(-1.15, 0, 0.55);
+      if (lHand) lHand.rotation.set(-0.1, 0, 0);
+      if (rHand) rHand.rotation.set(-0.1, 0, 0);
     } else {
       // Slow, deliberate "point at the table" gesture: a smooth bump that raises
       // the host's right arm (screen-left, toward the slide content) on a ~13s
@@ -415,7 +415,7 @@ export const VRMAvatar: React.FC<VRMAvatarProps> = ({
               left: 0,
               right: 0,
               bottom: 0,
-              height: Math.round(panelH * 0.24),
+              height: Math.round(panelH * 0.13),
               background:
                 "linear-gradient(180deg, rgba(36,49,71,0.96) 0%, rgba(20,28,46,0.98) 14%, rgba(13,19,33,0.99) 100%)",
               borderTop: "2px solid rgba(120,150,200,0.35)",
